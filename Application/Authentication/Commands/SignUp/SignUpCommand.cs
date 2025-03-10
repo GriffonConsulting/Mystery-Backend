@@ -1,0 +1,12 @@
+﻿using Application.Common.Requests;
+using MediatR;
+
+namespace Application.Authentication.Commands.SignUp
+{
+    public class SignUpCommand : IRequest<RequestResult>
+    {
+        public required string Email { get; set; }
+        public required string Password { get; set; }
+        public required bool MarketingEmail { get; set; }
+    }
+}
