@@ -6,6 +6,7 @@ using Application.Common.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace MurderParty.Api.Controllers
 {
@@ -21,9 +22,9 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpPost("SignUp", Name = "SignUp")]
-        [ProducesResponseType(typeof(RequestResult<SignInDto>), RequestStatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(RequestResult), RequestStatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(RequestResult<SignInDto>), RequestStatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status400BadRequest)]
         [AllowAnonymous]
         public async Task<IActionResult> SignUp(SignUpCommand signUpCommand, CancellationToken cancellationToken)
         {
@@ -58,8 +59,8 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpPost("SignIn", Name = "SignIn")]
-        [ProducesResponseType(typeof(RequestResult<SignInDto>), RequestStatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(RequestResult<SignInDto>), RequestStatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status400BadRequest)]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(SignInCommand signInCommand, CancellationToken cancellationToken)
         {

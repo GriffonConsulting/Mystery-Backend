@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Requests;
-using Authentication;
 using MediatR;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

@@ -1,5 +1,5 @@
-﻿using Application.Common.Requests;
-using Authentication;
+﻿using Application.Common.Interfaces;
+using Application.Common.Requests;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 

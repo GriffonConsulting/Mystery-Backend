@@ -1,5 +1,5 @@
-﻿using Application.Common.Requests;
-using EmailSender;
+﻿using Application.Common.Interfaces;
+using Application.Common.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

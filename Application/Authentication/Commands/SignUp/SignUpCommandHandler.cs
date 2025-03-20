@@ -1,8 +1,7 @@
-﻿using Application.Common.Requests;
-using Authentication;
+﻿using Application.Common.Interfaces;
+using Application.Common.Requests;
 using Database.Commands;
 using Domain.Authorization;
-using EmailSender;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;

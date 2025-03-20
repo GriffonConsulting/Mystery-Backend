@@ -1,6 +1,6 @@
 using Application;
 using Application.Common;
-using Authentication;
+using Application.Common.Interfaces;
 using Email;
 using EmailSender;
 using EntityFramework;
@@ -76,7 +76,7 @@ builder.Services.AddAuthorization();
 
 StripeConfiguration.ApiKey = config["Stripe:ApiKey"];
 
-builder.Services.AddMediatR(conf => conf.RegisterServicesFromAssemblies(typeof(ApplicationAssembly).Assembly, typeof(CommonApplicationAssembly).Assembly));
+builder.Services.AddMediatR(conf => conf.RegisterServicesFromAssemblies(typeof(ApplicationAssembly).Assembly));
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

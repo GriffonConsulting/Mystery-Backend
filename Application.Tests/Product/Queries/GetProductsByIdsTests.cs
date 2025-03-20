@@ -1,5 +1,4 @@
 ﻿using Application.Common.Exceptions;
-using Application.Product.Queries.GetProducts;
 using Application.Product.Queries.GetProductsByIds;
 using Database.Queries;
 using Domain.Enums.Product;

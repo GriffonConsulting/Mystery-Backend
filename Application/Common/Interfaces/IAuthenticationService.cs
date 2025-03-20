@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Authentication
+namespace Application.Common.Interfaces
 {
     public interface IAuthenticationService
     {

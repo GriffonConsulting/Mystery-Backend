@@ -21,7 +21,7 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpPost("Checkout", Name = "Checkout")]
-        [ProducesResponseType(typeof(RequestResult<CheckoutOutDto>), RequestStatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult<CheckoutOutDto>), StatusCodes.Status200OK)]
         [Authorize]
         public async Task<IActionResult> Checkout(CheckoutProductsCommand checkoutProductCommand, CancellationToken cancellationToken)
         {

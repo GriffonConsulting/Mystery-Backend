@@ -1,8 +1,7 @@
-﻿using Application.Common.Requests;
+﻿using Application.Common.Interfaces;
+using Application.Common.Requests;
 using Database.Queries;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using Payment;
 using Stripe.Checkout;
 
 namespace Application.Payment.Commands.Checkout

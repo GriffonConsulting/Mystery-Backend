@@ -1,7 +1,6 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Requests;
-using Authentication;
-using EmailSender;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;

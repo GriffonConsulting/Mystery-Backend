@@ -18,8 +18,8 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpPost(Name = "Contact")]
-        [ProducesResponseType(typeof(RequestResult), RequestStatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(RequestResult), RequestStatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(RequestResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult), StatusCodes.Status400BadRequest)]
         [AllowAnonymous]
         public async Task<IActionResult> Contact(ContactCommand contactCommand, CancellationToken cancellationToken)
         {

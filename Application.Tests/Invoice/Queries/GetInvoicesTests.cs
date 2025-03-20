@@ -1,8 +1,5 @@
-﻿using Application.Common.Exceptions;
-using Application.Invoices.Queries.GetInvoices;
-using Application.Product.Queries.GetProductsByIds;
+﻿using Application.Invoices.Queries.GetInvoices;
 using Database.Queries;
-using Domain.Enums.Product;
 using Moq;
 
 namespace Application.Tests.Invoice.Queries
