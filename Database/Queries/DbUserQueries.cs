@@ -3,9 +3,9 @@ using EntityFramework;
 
 namespace Database.Queries
 {
-    public class UserQueries : DbQueriesBase<User>
+    public class DbUserQueries : DbQueriesBase<User>
     {
-        public UserQueries(AppDbContext dbContext) : base(dbContext)
+        public DbUserQueries(AppDbContext dbContext) : base(dbContext)
         {
         }
     }

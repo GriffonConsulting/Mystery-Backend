@@ -1,13 +1,11 @@
 ﻿using Application.Common.Requests;
 using Authentication;
 using Database.Commands;
-using Domain.Entities;
 using Domain.Authorization;
 using EmailSender;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
-using Application.Common.Exceptions;
 
 namespace Application.Authentication.Commands.SignUp
 {
@@ -34,7 +32,7 @@ namespace Application.Authentication.Commands.SignUp
 
             await _authenticationService.AddToRoleAsync(user, nameof(UserRoles.User));
             var userId = await _authenticationService.GetUserIdAsync(user);
-            var newUser = new User
+            var newUser = new Domain.Entities.User
             {
                 Id = Guid.Parse(userId),
                 MarketingEmail = request.MarketingEmail

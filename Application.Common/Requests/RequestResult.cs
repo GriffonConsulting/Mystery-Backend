@@ -1,7 +1,10 @@
-﻿namespace Application.Common.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.Common.Requests
 {
     public class RequestResult<T> : RequestResult
     {
+        [Required]
         public T Result { get; set; }
     }
 
