@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces.Services;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Stripe.Checkout;

@@ -1,5 +1,5 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
+using Application.Common.Interfaces.Services;
 using Application.Common.Requests;
 using MediatR;
 using System.IdentityModel.Tokens.Jwt;

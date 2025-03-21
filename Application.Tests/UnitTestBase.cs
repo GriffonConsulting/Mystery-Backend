@@ -1,12 +1,9 @@
-﻿using EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Application.Tests
 {
     public class UnitTestBase : IDisposable
     {
-        protected InMemoryDbContext DbContextMock { get; } = new InMemoryDbContext(new DbContextOptions<AppDbContext>() { });
         private static readonly Random _random = new();
 
         public void Dispose()
@@ -19,7 +16,6 @@ namespace Application.Tests
         {
             if (disposing)
             {
-                DbContextMock?.TrulyDispose();
             }
         }
 

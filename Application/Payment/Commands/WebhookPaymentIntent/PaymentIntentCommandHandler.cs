@@ -1,5 +1,5 @@
-﻿using Application.Common.Requests;
-using Database.Commands;
+﻿using Application.Common.Interfaces.Repositories;
+using Application.Common.Requests;
 using Domain.Entities;
 using MediatR;
 using Stripe;
@@ -8,13 +8,13 @@ namespace Application.Payment.Commands.WebhookPaymentIntent
 {
     public class PaymentIntentCommandHandler : IRequestHandler<PaymentIntentCommand, RequestResult>
     {
-        private DbOrderCommands _orderCommands { get; }
-        private OrderContentCommands _orderContentCommands { get; }
+        private IOrderRepository _orderRepository { get; }
+        private IOrderContentRepository _orderContentRepository { get; }
 
-        public PaymentIntentCommandHandler(DbOrderCommands orderCommands, OrderContentCommands orderContentCommands)
+        public PaymentIntentCommandHandler(IOrderRepository orderRepository, IOrderContentRepository orderContentRepository)
         {
-            _orderCommands = orderCommands;
-            _orderContentCommands = orderContentCommands;
+            _orderRepository = orderRepository;
+            _orderContentRepository = orderContentRepository;
         }
 
 
@@ -24,7 +24,7 @@ namespace Application.Payment.Commands.WebhookPaymentIntent
             var chargeService = new ChargeService();
             var latestCharge = await chargeService.GetAsync(request.PaymentIntent.LatestChargeId, cancellationToken: cancellationToken);
 
-            var orderId = await _orderCommands.AddAsync(
+            var orderId = await _orderRepository.AddAsync(
                 new Order
                 {
                     ReceiptUrl = latestCharge.ReceiptUrl,
@@ -37,7 +37,7 @@ namespace Application.Payment.Commands.WebhookPaymentIntent
 
             foreach (var productId in productsIds)
             {
-                await _orderContentCommands.AddAsync(
+                await _orderContentRepository.AddAsync(
                     new OrderContent
                     {
                         ProductId = Guid.Parse(productId),

@@ -1,24 +1,24 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Application.Product.Queries.GetProduct;
-using Database.Queries;
 using MediatR;
 
 namespace Application.Product.Queries.GetProductsByIds
 {
     public class GetProductsByIdsQueryHandler : IRequestHandler<GetProductsByIdsQuery, RequestResult<GetProductDto[]>>
     {
-        private DbProductQueries _productQueries { get; }
+        private IProductRepository _productRepository { get; }
 
-        public GetProductsByIdsQueryHandler(DbProductQueries productQueries)
+        public GetProductsByIdsQueryHandler(IProductRepository productRepository)
         {
-            _productQueries = productQueries;
+            _productRepository = productRepository;
         }
 
 
         public async Task<RequestResult<GetProductDto[]>> Handle(GetProductsByIdsQuery request, CancellationToken cancellationToken)
         {
-            var products = await _productQueries.GetByProductsIdsAsync(request.ProductsIds, cancellationToken);
+            var products = await _productRepository.GetByProductsIdsAsync(request.ProductsIds, cancellationToken);
             if (!products.Any()) throw new NotFoundException("products");
 
             return new RequestResult<GetProductDto[]>

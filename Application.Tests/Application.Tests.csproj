@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Database\Database.csproj" />
-    <ProjectReference Include="..\EntityFramework\Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

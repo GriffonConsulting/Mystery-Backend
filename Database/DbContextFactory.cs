@@ -1,5 +1,5 @@
-﻿using Database.Commands;
-using Database.Queries;
+﻿using Application.Common.Interfaces.Repositories;
+using Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,15 +9,16 @@ namespace EntityFramework
 {
     public static class DbContextFactoryExtensions
     {
-        private static readonly Assembly _efAssembly = typeof(DbContextFactoryExtensions).Assembly;
-
         public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("PostgreSQLConnection")));
 
-            _efAssembly.Register(services, typeof(DbQueriesBase<>));
-            _efAssembly.Register(services, typeof(DbCommandsBase<>));
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderContentRepository, OrderContentRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserProductRepository, UserProductRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

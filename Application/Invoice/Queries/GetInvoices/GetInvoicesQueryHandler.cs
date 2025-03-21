@@ -1,23 +1,22 @@
-﻿using Application.Common.Exceptions;
+﻿using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
-using Database.Queries;
 using MediatR;
 
 namespace Application.Invoices.Queries.GetInvoices
 {
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, RequestResult<GetInvoicesResult[]>>
     {
-        private DbOrderQueries _orderQueries { get; }
+        private IOrderRepository _orderRepository { get; }
 
-        public GetInvoicesQueryHandler(DbOrderQueries orderQueries)
+        public GetInvoicesQueryHandler(IOrderRepository orderRepository)
         {
-            _orderQueries = orderQueries;
+            _orderRepository = orderRepository;
         }
 
 
         public async Task<RequestResult<GetInvoicesResult[]>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
-            var invoices = await _orderQueries.GetByUserIdAsync(request.UserId, cancellationToken);
+            var invoices = await _orderRepository.GetByUserIdAsync(request.UserId, cancellationToken);
 
             return new RequestResult<GetInvoicesResult[]>
             {

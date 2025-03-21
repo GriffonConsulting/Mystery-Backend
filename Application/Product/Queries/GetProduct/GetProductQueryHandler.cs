@@ -1,18 +1,17 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
-using Database.Queries;
-using Domain.Entities;
 using MediatR;
 
 namespace Application.Product.Queries.GetProduct
 {
     public class GetProductQueryHandler : IRequestHandler<GetProductQuery, RequestResult<GetProductDto>>
     {
-        private DbProductQueries _productQueries { get; }
+        private IProductRepository _productQueries { get; }
 
-        public GetProductQueryHandler(DbProductQueries productQueries)
+        public GetProductQueryHandler(IProductRepository productRepository)
         {
-            _productQueries = productQueries;
+            _productQueries = productRepository;
         }
 
 

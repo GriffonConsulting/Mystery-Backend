@@ -6,7 +6,6 @@ using Application.Common.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace MurderParty.Api.Controllers
 {

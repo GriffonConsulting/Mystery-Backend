@@ -1,6 +1,6 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces.Repositories;
+using Application.Common.Interfaces.Services;
 using Application.Common.Requests;
-using Database.Commands;
 using Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,14 +10,14 @@ namespace Application.Authentication.Commands.SignUp
 {
     public class SignUpCommandHandler : IRequestHandler<SignUpCommand, RequestResult>
     {
-        private readonly DbUserCommands _userCommands;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailSenderService _emailSenderService;
         private readonly IAuthenticationService _authenticationService;
 
-        public SignUpCommandHandler(IAuthenticationService authenticationService, DbUserCommands userCommands, IEmailSenderService emailSenderService)
+        public SignUpCommandHandler(IAuthenticationService authenticationService, IUserRepository userRepository, IEmailSenderService emailSenderService)
         {
             _authenticationService = authenticationService;
-            _userCommands = userCommands;
+            _userRepository = userRepository;
             _emailSenderService = emailSenderService;
         }
 
@@ -36,7 +36,7 @@ namespace Application.Authentication.Commands.SignUp
                 Id = Guid.Parse(userId),
                 MarketingEmail = request.MarketingEmail
             };
-            await _userCommands.AddAsync(newUser, cancellationToken);
+            await _userRepository.AddAsync(newUser, cancellationToken);
             var token = await _authenticationService.GenerateEmailConfirmationTokenAsync(user);
             _emailSenderService.SendEmail(new MailAddress(request.Email), "Création de compte", token);
             await _authenticationService.ConfirmEmailAsync(user, token);

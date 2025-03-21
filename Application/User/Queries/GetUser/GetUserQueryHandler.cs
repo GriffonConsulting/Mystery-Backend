@@ -1,23 +1,23 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Application.User.Queries.GetUser;
-using Database.Queries;
 using MediatR;
 
 namespace Application.Product.Queries.GetProduct;
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, RequestResult<GetUserDto>>
 {
-    private DbUserQueries _dbUserQueries { get; }
+    private IUserRepository _userRepository { get; }
 
-    public GetUserQueryHandler(DbUserQueries dbUserQueries)
+    public GetUserQueryHandler(IUserRepository userRepository)
     {
-        _dbUserQueries = dbUserQueries;
+        _userRepository = userRepository;
     }
 
     public async Task<RequestResult<GetUserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        var user = await _dbUserQueries.GetById(request.ClientId, cancellationToken);
+        var user = await _userRepository.GetById(request.ClientId, cancellationToken);
         if (user == null) throw new NotFoundException("user");
 
         return new RequestResult<GetUserDto>
