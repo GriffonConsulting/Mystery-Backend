@@ -1,5 +1,5 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces.Services;
+using Application.Common.Interfaces;
 using Application.Common.Requests;
 using MediatR;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,9 +9,9 @@ namespace Application.Authentication.Commands.SignIn
 {
     public class SignInCommandHandler : IRequestHandler<SignInCommand, RequestResult<SignInDto>>
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthentication _authenticationService;
 
-        public SignInCommandHandler(IAuthenticationService authenticationService)
+        public SignInCommandHandler(IAuthentication authenticationService)
         {
             _authenticationService = authenticationService;
         }

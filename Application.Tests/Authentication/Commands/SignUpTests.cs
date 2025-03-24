@@ -8,25 +8,25 @@ using Xunit;
 using Moq;
 using Microsoft.AspNetCore.Identity;
 using Application.Common.Interfaces.Repositories;
-using Application.Common.Interfaces.Services;
 using Application.Common.Requests;
 using Application.Authentication.Commands.SignUp;
 using Domain.Authorization;
+using Application.Common.Interfaces;
 
 namespace Application.Tests.Authentication.Commands.SignUp
 {
     public class SignUpCommandHandlerTests
     {
-        private readonly Mock<IAuthenticationService> _authenticationServiceMock;
+        private readonly Mock<IAuthentication> _authenticationServiceMock;
         private readonly Mock<IUserRepository> _userRepositoryMock;
-        private readonly Mock<IEmailSenderService> _emailSenderServiceMock;
+        private readonly Mock<IEmailSender> _emailSenderServiceMock;
         private readonly SignUpCommandHandler _handler;
 
         public SignUpCommandHandlerTests()
         {
-            _authenticationServiceMock = new Mock<IAuthenticationService>();
+            _authenticationServiceMock = new Mock<IAuthentication>();
             _userRepositoryMock = new Mock<IUserRepository>();
-            _emailSenderServiceMock = new Mock<IEmailSenderService>();
+            _emailSenderServiceMock = new Mock<IEmailSender>();
             _handler = new SignUpCommandHandler(_authenticationServiceMock.Object, _userRepositoryMock.Object, _emailSenderServiceMock.Object);
         }
 

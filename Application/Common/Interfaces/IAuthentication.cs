@@ -2,9 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Application.Common.Interfaces.Services
+namespace Application.Common.Interfaces
 {
-    public interface IAuthenticationService
+    public interface IAuthentication
     {
         public Task<IdentityUser?> FindByEmailAsync(string email);
         public Task<IdentityResult> ConfirmEmailAsync(IdentityUser identityUser, string token);

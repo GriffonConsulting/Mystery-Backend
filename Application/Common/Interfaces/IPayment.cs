@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Stripe.Checkout;
 
-namespace Application.Common.Interfaces.Services
+namespace Application.Common.Interfaces
 {
-    public interface IPaymentService
+    public interface IPayment
     {
         public Session CreateSession(string email, Guid userId, Domain.Entities.Product[] products, Guid[] productsIds);
     }

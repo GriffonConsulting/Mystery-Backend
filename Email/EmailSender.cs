@@ -1,11 +1,11 @@
-﻿using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Mail;
 
 namespace Email
 {
-    public class EmailSenderService : IEmailSenderService
+    public class EmailSenderService : IEmailSender
     {
         private readonly IConfiguration _configuration;
 

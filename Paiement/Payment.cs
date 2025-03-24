@@ -1,15 +1,15 @@
-﻿using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Stripe.Checkout;
 
 namespace Payment
 {
-    public class PaymentService : IPaymentService
+    public class Payment : IPayment
     {
         private readonly IConfiguration _configuration;
 
-        public PaymentService(IConfiguration configuration)
+        public Payment(IConfiguration configuration)
         {
             _configuration = configuration;
         }

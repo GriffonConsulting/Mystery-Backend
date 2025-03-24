@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
 using Application.Common.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,10 +8,10 @@ namespace Application.Contact.Commands.Contact;
 
 public class ContactCommandHandler : IRequestHandler<ContactCommand, RequestResult>
 {
-    private readonly IEmailSenderService _emailSenderService;
+    private readonly IEmailSender _emailSenderService;
     private readonly IConfiguration _configuration;
 
-    public ContactCommandHandler(IEmailSenderService emailSenderService, IConfiguration configuration)
+    public ContactCommandHandler(IEmailSender emailSenderService, IConfiguration configuration)
     {
         _emailSenderService = emailSenderService;
         _configuration = configuration;

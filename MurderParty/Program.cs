@@ -1,6 +1,6 @@
 using Application;
 using Application.Common;
-using Application.Common.Interfaces.Services;
+using Application.Common.Interfaces;
 using Email;
 using EmailSender;
 using EntityFramework;
@@ -33,9 +33,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddCors();
 
-builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+builder.Services.AddScoped<IAuthentication, Authentication>();
+builder.Services.AddScoped<IPayment, Payment.Payment>();
 
 IConfigurationRoot config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")

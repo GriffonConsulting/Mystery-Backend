@@ -1,4 +1,4 @@
-﻿using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
 using Application.Common.Requests;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
@@ -7,9 +7,9 @@ namespace Application.Authentication.Commands.ConfirmEmail
 {
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, RequestResult>
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthentication _authenticationService;
 
-        public ConfirmEmailCommandHandler(IAuthenticationService authenticationService)
+        public ConfirmEmailCommandHandler(IAuthentication authenticationService)
         {
             _authenticationService = authenticationService;
         }

@@ -1,8 +1,8 @@
 ﻿using System.Net.Mail;
 
-namespace Application.Common.Interfaces.Services
+namespace Application.Common.Interfaces
 {
-    public interface IEmailSenderService
+    public interface IEmailSender
     {
         public void SendEmail(MailAddress to, string subject, string body);
     }

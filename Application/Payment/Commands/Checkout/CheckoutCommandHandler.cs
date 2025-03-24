@@ -1,5 +1,5 @@
-﻿using Application.Common.Interfaces.Repositories;
-using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using MediatR;
 using Stripe.Checkout;
@@ -9,9 +9,9 @@ namespace Application.Payment.Commands.Checkout
     public class CheckoutCommandHandler : IRequestHandler<CheckoutCommand, RequestResult<CheckoutOutDto>>
     {
         private readonly IProductRepository _productRepository;
-        private readonly IPaymentService _paymentService;
+        private readonly IPayment _paymentService;
 
-        public CheckoutCommandHandler(IProductRepository productRepository, IPaymentService paymentService)
+        public CheckoutCommandHandler(IProductRepository productRepository, IPayment paymentService)
         {
             _productRepository = productRepository;
             _paymentService = paymentService;

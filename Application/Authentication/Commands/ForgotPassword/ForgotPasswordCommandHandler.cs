@@ -1,5 +1,5 @@
 ﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces.Services;
+using Application.Common.Interfaces;
 using Application.Common.Requests;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -9,10 +9,10 @@ namespace Application.Authentication.Commands.ForgotPassword
 {
     public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, RequestResult>
     {
-        private readonly IAuthenticationService _authenticationService;
-        private readonly IEmailSenderService _emailSenderService;
+        private readonly IAuthentication _authenticationService;
+        private readonly IEmailSender _emailSenderService;
 
-        public ForgotPasswordCommandHandler(IAuthenticationService authenticationService, IEmailSenderService emailSenderService)
+        public ForgotPasswordCommandHandler(IAuthentication authenticationService, IEmailSender emailSenderService)
         {
             _authenticationService = authenticationService;
             _emailSenderService = emailSenderService;

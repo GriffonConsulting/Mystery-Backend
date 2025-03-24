@@ -1,5 +1,5 @@
-﻿using Application.Common.Interfaces.Repositories;
-using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Domain.Authorization;
 using MediatR;
@@ -11,10 +11,10 @@ namespace Application.Authentication.Commands.SignUp
     public class SignUpCommandHandler : IRequestHandler<SignUpCommand, RequestResult>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailSenderService _emailSenderService;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IEmailSender _emailSenderService;
+        private readonly IAuthentication _authenticationService;
 
-        public SignUpCommandHandler(IAuthenticationService authenticationService, IUserRepository userRepository, IEmailSenderService emailSenderService)
+        public SignUpCommandHandler(IAuthentication authenticationService, IUserRepository userRepository, IEmailSender emailSenderService)
         {
             _authenticationService = authenticationService;
             _userRepository = userRepository;
