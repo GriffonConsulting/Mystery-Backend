@@ -1,4 +1,5 @@
 ﻿using Application.Authentication.Commands.ConfirmEmail;
+using Application.Authentication.Commands.ForgotPassword;
 using Application.Authentication.Commands.SignIn;
 using Application.Authentication.Commands.SignUp;
 using Application.Common.Exceptions;
@@ -49,6 +50,15 @@ namespace MurderParty.Api.Controllers
         public async Task<IActionResult> SignIn(SignInCommand signInCommand, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(signInCommand, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpPost("ForgotPassword", Name = "ForgotPassword")]
+        [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand forgotPasswordCommand, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(forgotPasswordCommand, cancellationToken);
             return Ok(result);
         }
     }

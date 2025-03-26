@@ -18,6 +18,7 @@ namespace MurderParty.Api.Controllers
 
         [HttpGet(Name = "HealthCheck")]
         [ProducesResponseType(typeof(HealthReport), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(HealthReport), (int)HttpStatusCode.ServiceUnavailable)]
         [AllowAnonymous]
         public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
         {

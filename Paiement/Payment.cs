@@ -58,7 +58,7 @@ namespace Payment
                 BillingAddressCollection = "required",
                 LineItems = lineItems,
                 Mode = "payment",
-                ReturnUrl = _configuration["FrontEndUrl"] + "/account",
+                ReturnUrl = _configuration["Urls:FrontEndUrl"] + _configuration["Urls:AccountUrl"],
 
             };
             var service = new SessionService();
