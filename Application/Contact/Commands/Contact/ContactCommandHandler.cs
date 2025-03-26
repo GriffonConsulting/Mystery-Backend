@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Requests;
+using Email;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -18,9 +19,9 @@ public class ContactCommandHandler : IRequestHandler<ContactCommand, RequestResu
     }
 
     public async Task<RequestResult> Handle(ContactCommand request, CancellationToken cancellationToken)
-    {
-        //todo conf
-        _emailSenderService.SendEmail(new System.Net.Mail.MailAddress(_configuration["Email:Contact"]), $"contact {request.Email}", $"Email : {request.Email}\r\n{request.Message}");
+    {           
+        //todo get lang in user table
+        _emailSenderService.SendEmail(new System.Net.Mail.MailAddress(_configuration["Email:Contact"]), TemplateHtml.Contact, "fr");
 
         return new RequestResult { };
     }

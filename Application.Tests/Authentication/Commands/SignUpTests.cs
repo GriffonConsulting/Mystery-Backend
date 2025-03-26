@@ -12,6 +12,7 @@ using Application.Common.Requests;
 using Application.Authentication.Commands.SignUp;
 using Domain.Authorization;
 using Application.Common.Interfaces;
+using Email;
 
 namespace Application.Tests.Authentication.Commands.SignUp
 {
@@ -58,7 +59,7 @@ namespace Application.Tests.Authentication.Commands.SignUp
             Assert.NotNull(response);
             _authenticationServiceMock.Verify(s => s.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()), Times.Once);
             _authenticationServiceMock.Verify(s => s.AddToRoleAsync(It.IsAny<IdentityUser>(), nameof(UserRoles.User)), Times.Once);
-            _emailSenderServiceMock.Verify(e => e.SendEmail(It.IsAny<MailAddress>(), "Création de compte", token), Times.Once);
+            _emailSenderServiceMock.Verify(e => e.SendEmail(It.IsAny<MailAddress>(), TemplateHtml.SignUp, "fr"), Times.Once);
             _authenticationServiceMock.Verify(s => s.ConfirmEmailAsync(It.IsAny<IdentityUser>(), token), Times.Once);
         }
 

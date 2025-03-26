@@ -3,6 +3,7 @@ using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Domain.Authorization;
+using Email;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
@@ -39,7 +40,8 @@ namespace Application.Authentication.Commands.SignUp
             };
             await _userRepository.AddAsync(newUser, cancellationToken);
             var token = await _authenticationService.GenerateEmailConfirmationTokenAsync(user);
-            _emailSenderService.SendEmail(new MailAddress(request.Email), "Création de compte", token);
+            //todo get lang in user table
+            _emailSenderService.SendEmail(new MailAddress(request.Email), TemplateHtml.SignUp, "fr");
             await _authenticationService.ConfirmEmailAsync(user, token);
 
             return new RequestResult {  };
