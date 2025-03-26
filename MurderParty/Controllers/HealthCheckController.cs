@@ -1,10 +1,6 @@
-﻿using Application.Common.Requests;
-using Application.Product.Queries.GetProduct;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MurderParty.Helpers;
 using System.Net;
 
 namespace MurderParty.Api.Controllers
@@ -21,7 +17,7 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpGet(Name = "HealthCheck")]
-        [ProducesResponseType(typeof(RequestResult<GetProductDto[]>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(HealthReport), (int)HttpStatusCode.OK)]
         [AllowAnonymous]
         public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
         {
