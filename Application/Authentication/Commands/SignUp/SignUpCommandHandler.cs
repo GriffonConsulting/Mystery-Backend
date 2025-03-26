@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Domain.Authorization;
@@ -27,7 +28,7 @@ namespace Application.Authentication.Commands.SignUp
 
             var result = await _authenticationService.CreateAsync(user, request.Password);
 
-            if (!result.Succeeded) throw new HttpRequestException(string.Join(";", result.Errors.Select(e => e.Code)));
+            if (!result.Succeeded) throw new DuplicateException("userDuplicate");
 
             await _authenticationService.AddToRoleAsync(user, nameof(UserRoles.User));
             var userId = await _authenticationService.GetUserIdAsync(user);

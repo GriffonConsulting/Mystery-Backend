@@ -19,7 +19,7 @@ namespace Application.Product.Queries.GetProducts
         public async Task<RequestResult<GetProductDto[]>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
             var products = await _productRepository.GetByProductTypeWithImagesAsync(request.ProductType, cancellationToken);
-            if (!products.Any()) throw new NotFoundException("products");
+            if (!products.Any()) throw new NotFoundException("productsNotFound");
 
             return new RequestResult<GetProductDto[]>
             {

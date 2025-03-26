@@ -2,6 +2,7 @@
 using Application.Common.Interfaces;
 using Application.Common.Requests;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -18,9 +19,9 @@ namespace Application.Authentication.Commands.SignIn
 
         public async Task<RequestResult<SignInDto>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("user");
+            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("userNotFound");
             var result = await _authenticationService.CheckPasswordSignInAsync(user, request.Password, false);
-            if (!result.Succeeded) throw new HttpRequestException("password");
+            if (!result.Succeeded) throw new ValidationException("passwordValidationError");
 
             var userRoles = await _authenticationService.GetRolesAsync(user);
 

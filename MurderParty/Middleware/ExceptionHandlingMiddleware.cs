@@ -20,13 +20,19 @@ public class ExceptionHandlingMiddleware
         }
         catch (NotFoundException ex)
         {
-            _logger.LogWarning(ex, "Ressource non trouvée.");
+            _logger.LogWarning(ex, "Resource not found.");
             context.Response.StatusCode = StatusCodes.Status404NotFound;
             await context.Response.WriteAsJsonAsync(new { message = ex.Message });
         }
         catch (ValidationException ex)
         {
             _logger.LogWarning(ex, "Erreur de validation.");
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new { message = ex.Message });
+        }
+        catch (DuplicateException ex)
+        {
+            _logger.LogWarning(ex, "Duplicate.");
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsJsonAsync(new { message = ex.Message });
         }

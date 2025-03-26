@@ -16,7 +16,7 @@ namespace Application.Authentication.Commands.ConfirmEmail
 
         public async Task<RequestResult> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new HttpRequestException("user");
+            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new HttpRequestException("userError");
 
             var result = await _authenticationService.ConfirmEmailAsync(user, request.Token);
             if (!result.Succeeded) throw new ValidationException(result.Errors.First().Code);

@@ -20,7 +20,7 @@ namespace Application.Authentication.Commands.ForgotPassword
 
         public async Task<RequestResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("user");
+            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("userNotFound");
 
             var token = await _authenticationService.GeneratePasswordResetTokenAsync(user);
             //todo conf

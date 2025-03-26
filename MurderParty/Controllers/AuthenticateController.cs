@@ -27,25 +27,10 @@ namespace MurderParty.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SignUp(SignUpCommand signUpCommand, CancellationToken cancellationToken)
         {
-            try
-            {
-                var signUpResult = await _mediator.Send(signUpCommand, cancellationToken);
-                var signInResult = await _mediator.Send(new SignInCommand { Email = signUpCommand.Email, Password = signUpCommand.Password }, cancellationToken);
+            var signUpResult = await _mediator.Send(signUpCommand, cancellationToken);
+            var signInResult = await _mediator.Send(new SignInCommand { Email = signUpCommand.Email, Password = signUpCommand.Password }, cancellationToken);
 
-                return Ok(signInResult);
-            }
-            catch (HttpRequestException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
+            return Ok(signInResult);
         }
 
 
