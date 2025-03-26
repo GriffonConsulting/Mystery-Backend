@@ -6,6 +6,7 @@ using EmailSender;
 using EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MurderParty.Swagger.OperationFilters;
@@ -97,6 +98,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = true;
 });
 
+builder.Services.AddHealthChecks()
+    .AddCheck<StripeHealthCheck>("stripe_api")
+    .AddDbContextCheck<AppDbContext>("user check", customTestQuery: (db, token) => db.User.AnyAsync(cancellationToken: token));
 
 var app = builder.Build();
 
