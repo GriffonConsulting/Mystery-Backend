@@ -32,7 +32,7 @@ namespace Email
             string htmlContent = File.ReadAllText($"{path}\\Html\\{lang}\\{templateHtml}.html");
             emailHtml = emailHtml.Replace("{{body}}", htmlContent);
             emailHtml = emailHtml.Replace("{{faq}}", _configuration["Email:Faq"]);
-            emailHtml = emailHtml.Replace("{{mailTo}}", _configuration["Email:mailTo"]);
+            emailHtml = emailHtml.Replace("{{mailTo}}", _configuration["Email:MailTo"]);
             emailHtml = emailHtml.Replace("{{year}}", DateTime.Now.Year.ToString());
 
             foreach (var arg in args)
