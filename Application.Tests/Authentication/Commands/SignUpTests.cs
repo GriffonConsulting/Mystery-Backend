@@ -13,6 +13,7 @@ using Application.Authentication.Commands.SignUp;
 using Domain.Authorization;
 using Application.Common.Interfaces;
 using Email;
+using Application.Common.Exceptions;
 
 namespace Application.Tests.Authentication.Commands.SignUp
 {
@@ -68,17 +69,17 @@ namespace Application.Tests.Authentication.Commands.SignUp
         {
             // Arrange
             var user = new IdentityUser { UserName = "user@example.com", Email = "user@example.com" };
-            var result = IdentityResult.Failed(new IdentityError { Code = "DuplicateUserName", Description = "Username already exists." });
+            var result = IdentityResult.Failed(new IdentityError { Code = "userDuplicate", Description = "Username already exists." });
 
             _authenticationServiceMock
                 .Setup(s => s.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
                 .ReturnsAsync(result);
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<HttpRequestException>(() => 
+            var exception = await Assert.ThrowsAsync<DuplicateException>(() => 
                 _handler.Handle(new SignUpCommand { Email = "user@example.com", Password = "Password123!", MarketingEmail = true }, CancellationToken.None));
 
-            Assert.Contains("DuplicateUserName", exception.Message);
+            Assert.Contains("userDuplicate", exception.Message);
         }
 
         [Fact]
