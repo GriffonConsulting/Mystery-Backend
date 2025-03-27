@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Application.Authentication.Commands.SignIn
+namespace Application.Authentication.Queries.SignIn
 {
     public class SignInCommandHandler : IRequestHandler<SignInCommand, RequestResult<SignInDto>>
     {

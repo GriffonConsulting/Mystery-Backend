@@ -1,7 +1,7 @@
 ﻿using Application.Common.Requests;
 using MediatR;
 
-namespace Application.Authentication.Commands.SignIn;
+namespace Application.Authentication.Queries.SignIn;
 
 public class SignInCommand : IRequest<RequestResult<SignInDto>>
 {

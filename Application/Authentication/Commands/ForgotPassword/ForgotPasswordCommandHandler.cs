@@ -26,7 +26,7 @@ namespace Application.Authentication.Commands.ForgotPassword
             var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("userNotFound");
 
             var token = await _authenticationService.GeneratePasswordResetTokenAsync(user);
-            var resetPasswordUrl = _configuration["Urls:FrontEndUrl"] + _configuration["Urls:ResetPasswordUrl"] + token;
+            var resetPasswordUrl = $"{_configuration["Urls:FrontEndUrl"]}{_configuration["Urls:ResetPasswordUrl"]}?email={request.Email}&token={token}";
             //todo get lang in user table
             _emailSenderService.SendEmail(new MailAddress(request.Email), TemplateHtml.ForgotPassword, "fr", new KeyValuePair<string, string>("resetPasswordUrl", resetPasswordUrl));
 

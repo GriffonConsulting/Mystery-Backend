@@ -45,8 +45,6 @@ namespace EmailSender
         {
             return await _userManager.GetRolesAsync(identityUser);
         }
-
-
         public async Task<IdentityResult> CreateAsync(IdentityUser identityUser, string password)
         {
             return await _userManager.CreateAsync(identityUser, password);
@@ -64,6 +62,10 @@ namespace EmailSender
             return await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
         }
 
+        public async Task<IdentityResult> ResetPasswordAsync(IdentityUser identityUser, string token, string newPassword)
+        {
+            return await _userManager.ResetPasswordAsync(identityUser, token, newPassword);
+        }
         public JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));

@@ -1,4 +1,4 @@
-﻿namespace Application.Authentication.Commands.SignIn
+﻿namespace Application.Authentication.Queries.SignIn
 {
     public record SignInDto
     {

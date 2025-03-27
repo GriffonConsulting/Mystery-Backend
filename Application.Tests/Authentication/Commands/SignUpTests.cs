@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
-using Moq;
-using Microsoft.AspNetCore.Identity;
-using Application.Common.Interfaces.Repositories;
-using Application.Common.Requests;
-using Application.Authentication.Commands.SignUp;
-using Domain.Authorization;
-using Application.Common.Interfaces;
-using Email;
+﻿using Application.Authentication.Commands.SignUp;
 using Application.Common.Exceptions;
+using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
+using Domain.Authorization;
+using Email;
+using Microsoft.AspNetCore.Identity;
+using Moq;
+using System.Net.Mail;
 
 namespace Application.Tests.Authentication.Commands.SignUp
 {

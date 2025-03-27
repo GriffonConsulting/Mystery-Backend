@@ -1,7 +1,8 @@
 ﻿using Application.Authentication.Commands.ConfirmEmail;
 using Application.Authentication.Commands.ForgotPassword;
-using Application.Authentication.Commands.SignIn;
+using Application.Authentication.Commands.ResetPassword;
 using Application.Authentication.Commands.SignUp;
+using Application.Authentication.Queries.SignIn;
 using Application.Common.Exceptions;
 using Application.Common.Requests;
 using MediatR;
@@ -60,6 +61,15 @@ namespace MurderParty.Api.Controllers
         {
             var result = await _mediator.Send(forgotPasswordCommand, cancellationToken);
             return Ok(result);
+        }
+
+        [HttpPost("ResetPassword", Name = "ResetPassword")]
+        [ProducesResponseType(typeof(RequestResult), StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommand resetPasswordCommand, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(resetPasswordCommand, cancellationToken);
+            return Ok();
         }
     }
 }
