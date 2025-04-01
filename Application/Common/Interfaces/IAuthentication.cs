@@ -17,5 +17,7 @@ namespace Application.Common.Interfaces
         public Task<string> GenerateEmailConfirmationTokenAsync(IdentityUser identityUser);
         public JwtSecurityToken GetToken(List<Claim> authClaims);
         public Task<IdentityResult> ResetPasswordAsync(IdentityUser identityUser, string token, string newPassword);
+        public Task<string> GenerateChangeEmailTokenAsync(IdentityUser identityUser, string email);
+        public Task<IdentityResult> ChangeEmailAsync(IdentityUser identityUser, string newEmail, string token);
     }
 }

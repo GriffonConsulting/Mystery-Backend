@@ -8,22 +8,22 @@ using System.Security.Claims;
 
 namespace Application.Authentication.Queries.SignIn
 {
-    public class SignInCommandHandler : IRequestHandler<SignInCommand, RequestResult<SignInDto>>
+    public class SignInQueryHandler : IRequestHandler<SignInQuery, RequestResult<SignInDto>>
     {
-        private readonly IAuthentication _authenticationService;
+        private readonly IAuthentication _authentication;
 
-        public SignInCommandHandler(IAuthentication authenticationService)
+        public SignInQueryHandler(IAuthentication authentication)
         {
-            _authenticationService = authenticationService;
+            _authentication = authentication;
         }
 
-        public async Task<RequestResult<SignInDto>> Handle(SignInCommand request, CancellationToken cancellationToken)
+        public async Task<RequestResult<SignInDto>> Handle(SignInQuery request, CancellationToken cancellationToken)
         {
-            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new NotFoundException("userNotFound");
-            var result = await _authenticationService.CheckPasswordSignInAsync(user, request.Password, false);
+            var user = await _authentication.FindByEmailAsync(request.Email) ?? throw new NotFoundException("userNotFound");
+            var result = await _authentication.CheckPasswordSignInAsync(user, request.Password, false);
             if (!result.Succeeded) throw new ValidationException("passwordValidationError");
 
-            var userRoles = await _authenticationService.GetRolesAsync(user);
+            var userRoles = await _authentication.GetRolesAsync(user);
 
             var authClaims = new List<Claim>
                 {
@@ -37,7 +37,7 @@ namespace Application.Authentication.Queries.SignIn
                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
             }
 
-            var token = _authenticationService.GetToken(authClaims);
+            var token = _authentication.GetToken(authClaims);
 
 
             return new RequestResult<SignInDto>

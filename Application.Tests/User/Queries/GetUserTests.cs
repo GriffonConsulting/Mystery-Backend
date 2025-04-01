@@ -3,7 +3,7 @@ using Application.Common.Interfaces.Repositories;
 using Application.Product.Queries.GetProduct;
 using Moq;
 
-namespace Application.Tests.Product.Queries.GetProduct
+namespace Application.Tests.User.Queries
 {
     public class GetUserQueryHandlerTests
     {

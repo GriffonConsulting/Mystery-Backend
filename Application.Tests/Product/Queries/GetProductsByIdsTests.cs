@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
-using Moq;
-using Application.Common.Exceptions;
+﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces.Repositories;
-using Application.Common.Requests;
-using Application.Product.Queries.GetProduct;
 using Application.Product.Queries.GetProductsByIds;
 using Domain.Entities;
 using Domain.Enums.Product;
+using Moq;
 
-namespace Application.Tests.Product.Queries.GetProductsByIds
+namespace Application.Tests.Product.Queries
 {
     public class GetProductsByIdsQueryHandlerTests
     {

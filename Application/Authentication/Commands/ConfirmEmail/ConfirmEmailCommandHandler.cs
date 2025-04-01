@@ -7,18 +7,18 @@ namespace Application.Authentication.Commands.ConfirmEmail
 {
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, RequestResult>
     {
-        private readonly IAuthentication _authenticationService;
+        private readonly IAuthentication _authentication;
 
-        public ConfirmEmailCommandHandler(IAuthentication authenticationService)
+        public ConfirmEmailCommandHandler(IAuthentication authentication)
         {
-            _authenticationService = authenticationService;
+            _authentication = authentication;
         }
 
         public async Task<RequestResult> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var user = await _authenticationService.FindByEmailAsync(request.Email) ?? throw new HttpRequestException("userError");
+            var user = await _authentication.FindByEmailAsync(request.Email) ?? throw new HttpRequestException("userError");
 
-            var result = await _authenticationService.ConfirmEmailAsync(user, request.Token);
+            var result = await _authentication.ConfirmEmailAsync(user, request.Token);
             if (!result.Succeeded) throw new ValidationException(result.Errors.First().Code);
 
             return new RequestResult { };

@@ -30,7 +30,7 @@ namespace MurderParty.Api.Controllers
         public async Task<IActionResult> SignUp(SignUpCommand signUpCommand, CancellationToken cancellationToken)
         {
             var signUpResult = await _mediator.Send(signUpCommand, cancellationToken);
-            var signInResult = await _mediator.Send(new SignInCommand { Email = signUpCommand.Email, Password = signUpCommand.Password }, cancellationToken);
+            var signInResult = await _mediator.Send(new SignInQuery { Email = signUpCommand.Email, Password = signUpCommand.Password }, cancellationToken);
 
             return Ok(signInResult);
         }
@@ -48,7 +48,7 @@ namespace MurderParty.Api.Controllers
         [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(RequestResult<SignInDto>), StatusCodes.Status400BadRequest)]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(SignInCommand signInCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> SignIn(SignInQuery signInCommand, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(signInCommand, cancellationToken);
             return Ok(result);

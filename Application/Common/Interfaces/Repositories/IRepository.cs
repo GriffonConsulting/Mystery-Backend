@@ -1,8 +1,6 @@
 ﻿using Domain.Common;
 using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System;
 
 namespace Application.Common.Interfaces.Repositories;
 

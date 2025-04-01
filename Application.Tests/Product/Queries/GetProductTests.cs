@@ -4,7 +4,7 @@ using Application.Product.Queries.GetProduct;
 using Domain.Entities;
 using Moq;
 
-namespace Application.Tests.Product.Queries.GetProduct
+namespace Application.Tests.Product.Queries
 {
     public class GetProductQueryHandlerTests
     {

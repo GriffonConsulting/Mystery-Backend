@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Enums.Product;
 using Moq;
 
-namespace Application.Tests.Product.Queries.GetProducts
+namespace Application.Tests.Product.Queries
 {
     public class GetProductsQueryHandlerTests
     {
@@ -68,7 +68,7 @@ namespace Application.Tests.Product.Queries.GetProducts
                 .Setup(repo => repo.GetByProductTypeWithImagesAsync(It.IsAny<ProductType>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(products);
 
-            var query = new GetProductsQuery { ProductType = Domain.Enums.Product.ProductType.MurderParty };
+            var query = new GetProductsQuery { ProductType = ProductType.MurderParty };
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);

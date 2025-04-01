@@ -20,6 +20,15 @@ namespace EmailSender
             _signInManager = signInManager;
             _configuration = configuration;
         }
+        public async Task<string> GenerateChangeEmailTokenAsync(IdentityUser identityUser, string newEmail)
+        {
+            return await _userManager.GenerateChangeEmailTokenAsync(identityUser, newEmail);
+        }
+
+        public async Task<IdentityResult> ChangeEmailAsync(IdentityUser identityUser, string newEmail, string token)
+        {
+            return await _userManager.ChangeEmailAsync(identityUser, newEmail, token);
+        }
 
         public async Task<IdentityUser?> FindByEmailAsync(string email)
         {
