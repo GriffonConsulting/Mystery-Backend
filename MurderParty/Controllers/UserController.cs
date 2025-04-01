@@ -22,7 +22,7 @@ namespace MurderParty.Api.Controllers
 
         [HttpGet(Name = "GetUser")]
         [ProducesResponseType(typeof(RequestResult<GetUserDto>), StatusCodes.Status200OK)]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> GetProducts(CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetUserQuery {  ClientId = Request.UserId() }, cancellationToken);
@@ -31,7 +31,7 @@ namespace MurderParty.Api.Controllers
 
         [HttpPut(Name = "UpdateUser")]
         [ProducesResponseType(typeof(RequestResult), StatusCodes.Status200OK)]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand updateUserQuery, CancellationToken cancellationToken)
         {
             updateUserQuery.OldEmail = Request.Email();
