@@ -1,10 +1,8 @@
-﻿using Domain.Enums.Product;
-using System.ComponentModel.DataAnnotations;
-
-namespace Application.User.Queries.GetUser
+﻿namespace Application.User.Queries.GetUser
 {
     public record GetUserDto
     {
+        public required string Email { get; set; }
         public string? Firstname { get; set; }
         public string? Lastname { get; set; }
         public string? Address { get; set; }

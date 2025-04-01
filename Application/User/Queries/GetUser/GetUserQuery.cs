@@ -9,5 +9,7 @@ namespace Application.Product.Queries.GetProduct
     {
         [JsonIgnore]
         public required Guid ClientId { get; set; }
+        [JsonIgnore]
+        public required string Email { get; set; }
     }
 }

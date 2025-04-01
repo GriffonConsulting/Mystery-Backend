@@ -24,6 +24,7 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, RequestResult<G
         {
             Result = new GetUserDto
             {
+                Email = request.Email,
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
                 Address = user.Address,
