@@ -9,8 +9,9 @@ namespace Application.User.Commands.UpdateUser
     {
         [JsonIgnore]
         public Guid UserId { get; set; }
+        [JsonIgnore]
         [EmailAddress]
-        public required string OldEmail { get; set; }
+        public string? OldEmail { get; set; }
         [EmailAddress]
         public required string NewEmail { get; set; }
 
