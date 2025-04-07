@@ -1,6 +1,6 @@
 ﻿namespace Application.Invoices.Queries.GetInvoices
 {
-    public record GetInvoicesResult
+    public record GetInvoicesDto
     {
         public required decimal Amount { get; init; }
         public required DateTime CreatedOn { get; init; }

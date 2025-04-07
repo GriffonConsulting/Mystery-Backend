@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Faq.Queries.GetFaq
 {
-    public class GetFaqQueryHandler : IRequestHandler<GetFaqQuery, RequestResult<GetFaqResult[]>>
+    public class GetFaqQueryHandler : IRequestHandler<GetFaqQuery, RequestResult<GetFaqDto[]>>
     {
         private IFaqRepository _faqRepository { get; }
 
@@ -14,13 +14,13 @@ namespace Application.Faq.Queries.GetFaq
         }
 
 
-        public async Task<RequestResult<GetFaqResult[]>> Handle(GetFaqQuery request, CancellationToken cancellationToken)
+        public async Task<RequestResult<GetFaqDto[]>> Handle(GetFaqQuery request, CancellationToken cancellationToken)
         {
             var faqResult = await _faqRepository.GetAllAsync(cancellationToken);
 
-            return new RequestResult<GetFaqResult[]>
+            return new RequestResult<GetFaqDto[]>
             {
-                Result = faqResult.Select((f) => new GetFaqResult
+                Result = faqResult.Select((f) => new GetFaqDto
                 {
                     Question = f.Question,
                     Answer = f.Answer,

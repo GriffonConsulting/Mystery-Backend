@@ -19,7 +19,7 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpGet("ByUserId", Name = "GetInvoicesByUserId")]
-        [ProducesResponseType(typeof(RequestResult<GetInvoicesResult[]>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult<GetInvoicesDto[]>), StatusCodes.Status200OK)]
         [Authorize]
         public async Task<IActionResult> GetInvoicesByUserId(CancellationToken cancellationToken)
         {

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Invoices.Queries.GetInvoices
 {
-    public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, RequestResult<GetInvoicesResult[]>>
+    public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, RequestResult<GetInvoicesDto[]>>
     {
         private IOrderRepository _orderRepository { get; }
 
@@ -14,13 +14,13 @@ namespace Application.Invoices.Queries.GetInvoices
         }
 
 
-        public async Task<RequestResult<GetInvoicesResult[]>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
+        public async Task<RequestResult<GetInvoicesDto[]>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
             var invoices = await _orderRepository.GetByUserIdAsync(request.UserId, cancellationToken);
 
-            return new RequestResult<GetInvoicesResult[]>
+            return new RequestResult<GetInvoicesDto[]>
             {
-                Result = invoices.Select((i) => new GetInvoicesResult
+                Result = invoices.Select((i) => new GetInvoicesDto
                 {
                     Amount = i.Amount,
                     CreatedOn = i.CreatedOn,

@@ -1,4 +1,5 @@
 ﻿using Application.Common.Requests;
+using Application.Faq.Queries.GetFaq;
 using Application.Product.Queries.GetProduct;
 using Application.User.Commands.UpdateUser;
 using Application.User.Queries.GetUser;
@@ -21,7 +22,7 @@ namespace MurderParty.Api.Controllers
         }
 
         [HttpGet(Name = "GetFaq")]
-        [ProducesResponseType(typeof(RequestResult<GetUserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RequestResult<GetFaqDto>), StatusCodes.Status200OK)]
         [Authorize]
         public async Task<IActionResult> GetProducts(CancellationToken cancellationToken)
         {
