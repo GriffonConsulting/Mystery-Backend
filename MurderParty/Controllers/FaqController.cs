@@ -22,12 +22,12 @@ namespace MurderParty.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetFaq")]
+        [HttpGet("{lang}", Name = "GetFaq")]
         [ProducesResponseType(typeof(RequestResult<GetFaqDto>), StatusCodes.Status200OK)]
-        [Authorize]
-        public async Task<IActionResult> GetProducts([FromBody] GetFaqQuery faqQuery, CancellationToken cancellationToken)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetProducts([FromRoute] string lang, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(faqQuery, cancellationToken);
+            var result = await _mediator.Send(new GetFaqQuery { Lang = lang }, cancellationToken);
             return Ok(result);
         }
     }
