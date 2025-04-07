@@ -7,5 +7,5 @@ namespace Application.Faq.Queries.GetFaq;
 public class GetFaqQuery : IRequest<RequestResult<GetFaqDto[]>>
 {
     [JsonIgnore]
-    public Guid UserId { get; set; }
+    public required string Lang { get; set; }
 }

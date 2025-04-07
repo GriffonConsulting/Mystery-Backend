@@ -16,7 +16,7 @@ namespace Application.Faq.Queries.GetFaq
 
         public async Task<RequestResult<GetFaqDto[]>> Handle(GetFaqQuery request, CancellationToken cancellationToken)
         {
-            var faqResult = await _faqRepository.GetAllAsync(cancellationToken);
+            var faqResult = await _faqRepository.GetByLangAsync(request.Lang, cancellationToken);
 
             return new RequestResult<GetFaqDto[]>
             {

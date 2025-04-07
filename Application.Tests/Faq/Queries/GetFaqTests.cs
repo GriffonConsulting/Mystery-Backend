@@ -20,15 +20,15 @@ public class GetFaqTests
         // Arrange
         var fakeFaqs = new Faq[]
         {
-            new Faq { Question = "What is xUnit?", Answer = "A testing framework." },
-            new Faq { Question = "What is Moq?", Answer = "A mocking library." }
+            new Faq { Question = "What is xUnit?", Answer = "A testing framework.", Language = "fr" },
+            new Faq { Question = "What is Moq?", Answer = "A mocking library.", Language = "fr" }
         };
 
         _faqRepositoryMock
-    .Setup(repo => repo.GetAllAsync(It.IsAny<CancellationToken>()))
-    .ReturnsAsync(fakeFaqs);
+        .Setup(repo => repo.GetByLangAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(fakeFaqs);
 
-        var query = new GetFaqQuery();
+        var query = new GetFaqQuery() { Lang = "fr" };
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);
@@ -48,10 +48,10 @@ public class GetFaqTests
     {
         // Arrange
         _faqRepositoryMock
-            .Setup(repo => repo.GetAllAsync(It.IsAny<CancellationToken>()))
+            .Setup(repo => repo.GetByLangAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        var query = new GetFaqQuery();
+        var query = new GetFaqQuery() { Lang = "fr" };
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);
