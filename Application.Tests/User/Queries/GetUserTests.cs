@@ -36,7 +36,7 @@ namespace Application.Tests.User.Queries
                 .Setup(repo => repo.GetById(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
-            var query = new GetUserQuery { ClientId = Guid.NewGuid() };
+            var query = new GetUserQuery { ClientId = Guid.NewGuid(), Email = "" };
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);
@@ -61,7 +61,7 @@ namespace Application.Tests.User.Queries
                 .Setup(repo => repo.GetById(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Domain.Entities.User)null);
 
-            var query = new GetUserQuery { ClientId = Guid.NewGuid() };
+            var query = new GetUserQuery { ClientId = Guid.NewGuid(), Email = "" };
 
             // Act & Assert
             await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(query, CancellationToken.None));

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFramework
+namespace Database
 {
     public class AppDbContext : IdentityDbContext<IdentityUser>
     {
@@ -17,5 +17,6 @@ namespace EntityFramework
         public DbSet<PromoCode> PromoCode { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserProduct> UserProduct { get; set; }
+        public DbSet<Faq> Faq { get; set; }
     }
 }

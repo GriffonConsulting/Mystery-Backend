@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Repositories;
+using Database;
 using Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ namespace EntityFramework
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserProductRepository, UserProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IFaqRepository, FaqRepository>();
 
             return services;
         }

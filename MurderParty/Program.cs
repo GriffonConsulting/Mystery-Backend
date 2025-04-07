@@ -1,5 +1,6 @@
 using Application;
 using Application.Common.Interfaces;
+using Database;
 using Email;
 using EmailSender;
 using EntityFramework;

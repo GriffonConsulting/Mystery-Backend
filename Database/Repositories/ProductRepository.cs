@@ -2,7 +2,6 @@
 using Database.Commands;
 using Domain.Entities;
 using Domain.Enums.Product;
-using EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories
