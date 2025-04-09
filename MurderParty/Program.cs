@@ -99,7 +99,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 builder.Services.AddHealthChecks()
-    .AddCheck<StripeHealthCheck>("stripe_api")
+    .AddCheck<PaymentHealthCheck>("stripe_api")
     .AddDbContextCheck<AppDbContext>("user check", customTestQuery: (db, token) => db.User.AnyAsync(cancellationToken: token));
 
 var app = builder.Build();

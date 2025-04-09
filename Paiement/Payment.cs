@@ -14,7 +14,7 @@ namespace Payment
             _configuration = configuration;
         }
 
-        public Session CreateSession(string email, Guid userId, Product[] products, Guid[] productsIds)
+        public Session CreateSession(string email, string returnUrl, Guid userId, Product[] products, Guid[] productsIds)
         {
             List<SessionLineItemOptions> lineItems = [];
             var paymentIntentMetadata = new Dictionary<string, string>
@@ -54,12 +54,10 @@ namespace Payment
                 UiMode = "embedded",
                 Locale = "fr",
                 CustomerEmail = email,
-
                 BillingAddressCollection = "required",
                 LineItems = lineItems,
                 Mode = "payment",
-                ReturnUrl = _configuration["Urls:FrontEndUrl"] + _configuration["Urls:AccountUrl"],
-
+                ReturnUrl = returnUrl,
             };
             var service = new SessionService();
             Session session = service.Create(options);

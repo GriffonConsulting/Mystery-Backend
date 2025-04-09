@@ -7,15 +7,10 @@ namespace Application.Payment.Commands.Checkout
     public class CheckoutCommand : IRequest<RequestResult<CheckoutOutDto>>
     {
         [JsonIgnore]
-        public required Guid UserId { get; set; }
+        public Guid UserId { get; set; }
         [JsonIgnore]
-        public required string Email { get; set; }
-        public required CheckoutProductsCommand CheckoutProductsCommand { get; set; }
-    }
-
-    public class CheckoutProductsCommand
-    {
+        public string? Email { get; set; }
+        public required string ReturnUrl { get; set; }
         public required Guid[] ProductsIds { get; set; }
-
     }
 }

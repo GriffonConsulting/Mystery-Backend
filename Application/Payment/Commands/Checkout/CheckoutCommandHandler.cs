@@ -19,9 +19,9 @@ namespace Application.Payment.Commands.Checkout
 
         public async Task<RequestResult<CheckoutOutDto>> Handle(CheckoutCommand request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.GetByProductsIdsAsync(request.CheckoutProductsCommand.ProductsIds, cancellationToken);
+            var products = await _productRepository.GetByProductsIdsAsync(request.ProductsIds, cancellationToken);
 
-            Session session = _paymentService.CreateSession(request.Email, request.UserId, products, request.CheckoutProductsCommand.ProductsIds);
+            Session session = _paymentService.CreateSession(request.Email, request.ReturnUrl, request.UserId, products, request.ProductsIds);
 
             return new RequestResult<CheckoutOutDto>
             {

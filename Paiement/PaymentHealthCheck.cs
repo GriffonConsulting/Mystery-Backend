@@ -3,7 +3,7 @@ using Stripe;
 
 namespace Payment
 {
-    public class StripeHealthCheck : IHealthCheck
+    public class PaymentHealthCheck : IHealthCheck
     {
         public async Task<HealthCheckResult> CheckHealthAsync(
             HealthCheckContext context,

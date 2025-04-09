@@ -14,24 +14,22 @@ namespace MurderParty.Api.Controllers
     public class StripeController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IConfiguration _configuration;
 
-        public StripeController(IMediator mediator)
+        public StripeController(IMediator mediator, IConfiguration configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         [HttpPost("Checkout", Name = "Checkout")]
         [ProducesResponseType(typeof(RequestResult<CheckoutOutDto>), StatusCodes.Status200OK)]
         [Authorize]
-        public async Task<IActionResult> Checkout(CheckoutProductsCommand checkoutProductCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> Checkout(CheckoutCommand checkoutProductCommand, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(
-                new CheckoutCommand
-                {
-                    CheckoutProductsCommand = checkoutProductCommand,
-                    Email = Request.Email(),
-                    UserId = Request.UserId()
-                },
+            checkoutProductCommand.Email = Request.Email();
+            checkoutProductCommand.UserId = Request.UserId();
+            var result = await _mediator.Send(checkoutProductCommand,
                 cancellationToken);
 
             return Ok(result);
@@ -42,11 +40,11 @@ namespace MurderParty.Api.Controllers
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync(cancellationToken);
-            //todo check signature
 
             try
             {
-                var stripeEvent = EventUtility.ParseEvent(json);
+                var stripeEvent = EventUtility.ConstructEvent(json,
+                    Request.Headers["Stripe-Signature"], _configuration["Stripe:WebhookKey"]);
                 if (stripeEvent.Type == EventTypes.PaymentIntentSucceeded)
                 {
                     var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
