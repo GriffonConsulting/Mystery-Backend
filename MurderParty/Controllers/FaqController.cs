@@ -1,13 +1,8 @@
 ﻿using Application.Common.Requests;
 using Application.Faq.Queries.GetFaq;
-using Application.Product.Queries.GetProduct;
-using Application.User.Commands.UpdateUser;
-using Application.User.Queries.GetUser;
-using Domain.Enums.Product;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MurderParty.Helpers;
 
 namespace MurderParty.Api.Controllers
 {

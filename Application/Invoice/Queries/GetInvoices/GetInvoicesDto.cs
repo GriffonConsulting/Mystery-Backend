@@ -2,6 +2,7 @@
 {
     public record GetInvoicesDto
     {
+        public required Guid Id { get; init; }
         public required decimal Amount { get; init; }
         public required DateTime CreatedOn { get; init; }
         public required string ReceiptUrl { get; init; }

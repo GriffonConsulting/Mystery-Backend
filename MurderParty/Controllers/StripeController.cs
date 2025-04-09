@@ -37,9 +37,9 @@ namespace MurderParty.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Webhook/PaymentIntent/Succeeded")]
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> WebhookPaymentIntentSucceeded(CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync(cancellationToken);
             //todo check signature
@@ -47,15 +47,23 @@ namespace MurderParty.Api.Controllers
             try
             {
                 var stripeEvent = EventUtility.ParseEvent(json);
-                var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                if (stripeEvent.Type == EventTypes.PaymentIntentSucceeded)
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
 
-                var result = await _mediator.Send(
-                    new PaymentIntentCommand
-                    {
-                        PaymentIntent = paymentIntent!
-                    }, cancellationToken);
+                    var result = await _mediator.Send(
+                        new PaymentIntentCommand
+                        {
+                            PaymentIntent = paymentIntent!
+                        }, cancellationToken);
 
-                return Ok();
+                    return Ok();
+                }
+                else
+                {
+                    // Unexpected event type
+                    return BadRequest($"Unhandled event type: {stripeEvent.Type}");
+                }
             }
             catch (StripeException)
             {
