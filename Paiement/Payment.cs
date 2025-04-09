@@ -52,6 +52,11 @@ namespace Payment
                     Metadata = paymentIntentMetadata
                 },
                 UiMode = "embedded",
+                AutomaticTax = new SessionAutomaticTaxOptions
+                {
+                    Enabled = true,
+
+                },
                 Locale = "fr",
                 CustomerEmail = email,
                 BillingAddressCollection = "required",

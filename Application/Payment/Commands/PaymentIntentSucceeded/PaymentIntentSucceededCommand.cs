@@ -2,9 +2,9 @@
 using MediatR;
 using Stripe;
 
-namespace Application.Payment.Commands.WebhookPaymentIntent
+namespace Application.Payment.Commands.PaymentIntentSucceeded
 {
-    public class PaymentIntentCommand : IRequest<RequestResult>
+    public class PaymentIntentSucceededCommand : IRequest<RequestResult>
     {
         public required PaymentIntent PaymentIntent { get; set; }
     }

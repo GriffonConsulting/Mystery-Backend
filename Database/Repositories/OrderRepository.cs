@@ -13,5 +13,10 @@ namespace Database.Repositories
         {
             return _dbContext.Set<Order>().Where(i => i.UserId == userId).ToArrayAsync(cancellationToken: cancellationToken);
         }
+
+        public Task<Order?> GetByPaymentIntentIdAsync(string paymentIntentId, CancellationToken cancellationToken = default)
+        {
+            return _dbContext.Set<Order>().Where(i => i.PaymentIntentId == paymentIntentId).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        }
     }
 }

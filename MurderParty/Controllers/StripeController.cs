@@ -1,6 +1,7 @@
 ﻿using Application.Common.Requests;
 using Application.Payment.Commands.Checkout;
-using Application.Payment.Commands.WebhookPaymentIntent;
+using Application.Payment.Commands.InvoiceFinalized;
+using Application.Payment.Commands.PaymentIntentSucceeded;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -50,17 +51,29 @@ namespace MurderParty.Api.Controllers
                     var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
 
                     var result = await _mediator.Send(
-                        new PaymentIntentCommand
+                        new PaymentIntentSucceededCommand
                         {
                             PaymentIntent = paymentIntent!
                         }, cancellationToken);
 
                     return Ok();
                 }
+                if (stripeEvent.Type == EventTypes.InvoiceFinalized)
+                {
+                    var invoice = stripeEvent.Data.Object as Invoice;
+
+                    var result = await _mediator.Send(
+                        new InvoiceFinalizedCommand
+                        {
+                            Invoice = invoice!
+                        }, cancellationToken);
+
+                    return Ok();
+                }
                 else
                 {
-                    // Unexpected event type
-                    return BadRequest($"Unhandled event type: {stripeEvent.Type}");
+
+                    return Ok();
                 }
             }
             catch (StripeException)
