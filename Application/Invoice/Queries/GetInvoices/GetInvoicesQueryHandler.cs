@@ -26,7 +26,7 @@ namespace Application.Invoices.Queries.GetInvoices
                     Amount = i.Amount,
                     CreatedOn = i.CreatedOn,
                     ReceiptUrl = i.ReceiptUrl,
-                }).ToArray()
+                }).OrderByDescending(i => i.CreatedOn).ToArray()
             };
         }
     }

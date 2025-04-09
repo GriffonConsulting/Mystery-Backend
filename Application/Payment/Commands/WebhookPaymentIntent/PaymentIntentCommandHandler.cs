@@ -27,7 +27,8 @@ namespace Application.Payment.Commands.WebhookPaymentIntent
             var orderId = await _orderRepository.AddAsync(
                 new Order
                 {
-                    ReceiptUrl = latestCharge.ReceiptUrl,
+                    //todo get the good url
+                    ReceiptUrl = latestCharge.ReceiptUrl.Replace("payment", "invoices"),
                     Amount = request.PaymentIntent.Amount,
                     CreatedOn = DateTime.UtcNow,
                     ModifiedOn = DateTime.UtcNow,

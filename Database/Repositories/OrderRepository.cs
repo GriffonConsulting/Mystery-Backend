@@ -9,7 +9,6 @@ namespace Database.Repositories
     {
         public OrderRepository(AppDbContext dbContext) : base(dbContext) { }
 
-
         public Task<Order[]> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             return _dbContext.Set<Order>().Where(i => i.UserId == userId).ToArrayAsync(cancellationToken: cancellationToken);

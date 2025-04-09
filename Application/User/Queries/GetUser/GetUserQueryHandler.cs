@@ -1,10 +1,9 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
-using Application.User.Queries.GetUser;
 using MediatR;
 
-namespace Application.Product.Queries.GetProduct;
+namespace Application.User.Queries.GetUser;
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, RequestResult<GetUserDto>>
 {
