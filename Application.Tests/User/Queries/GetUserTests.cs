@@ -1,6 +1,6 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces.Repositories;
-using Application.Product.Queries.GetProduct;
+using Application.User.Queries.GetUser;
 using Moq;
 
 namespace Application.Tests.User.Queries

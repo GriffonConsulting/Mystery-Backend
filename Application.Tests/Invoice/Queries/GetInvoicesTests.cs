@@ -27,7 +27,7 @@ namespace Application.Tests.Invoice.Queries
                     Amount = 100.50m,
                     CreatedOn = new DateTime(2025, 03, 21),
                     ReceiptUrl = "https://example.com/receipt1",
-                    StripeId = "",
+                    PaymentIntentId = "",
                     UserId = Guid.NewGuid(),
                 },
                 new Order
@@ -35,7 +35,7 @@ namespace Application.Tests.Invoice.Queries
                     Amount = 250.00m,
                     CreatedOn = new DateTime(2025, 03, 20),
                     ReceiptUrl = "https://example.com/receipt2",
-                    StripeId = "",
+                    PaymentIntentId = "",
                     UserId = Guid.NewGuid(),
                 }
             };
