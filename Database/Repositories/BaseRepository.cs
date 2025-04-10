@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Database.Commands
+namespace Database.Repositories
 {
     public abstract class BaseRepository<TEntity> where TEntity : IAuditableEntity
     {
@@ -17,14 +17,17 @@ namespace Database.Commands
 
         public async Task UpdateEntityAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            TEntity oldEntity = null;
-
+            entity.ModifiedOn = DateTime.Now;
             _dbContext.Update(entity);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task UpdateRangeEntitiesAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
+            foreach (var entity in entities)
+            {
+                entity.ModifiedOn = DateTime.Now;
+            }
             _dbContext.UpdateRange(entities);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -33,6 +36,8 @@ namespace Database.Commands
         {
             foreach (var entity in entities)
             {
+                entity.CreatedOn = DateTime.Now;
+                entity.ModifiedOn = DateTime.Now;
                 await _dbContext.AddAsync(entity, cancellationToken).ConfigureAwait(false);
             }
 
@@ -41,6 +46,8 @@ namespace Database.Commands
 
         public async Task<Guid> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
+            entity.CreatedOn = DateTime.Now;
+            entity.ModifiedOn = DateTime.Now;
             await _dbContext.AddAsync(entity, cancellationToken).ConfigureAwait(false);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 

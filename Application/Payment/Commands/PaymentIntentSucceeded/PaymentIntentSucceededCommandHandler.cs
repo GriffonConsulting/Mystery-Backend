@@ -28,8 +28,6 @@ namespace Application.Payment.Commands.PaymentIntentSucceeded
                 new Order
                 {
                     Amount = request.PaymentIntent.Amount,
-                    CreatedOn = DateTime.UtcNow,
-                    ModifiedOn = DateTime.UtcNow,
                     UserId = Guid.Parse(request.PaymentIntent.Metadata["UserId"]),
                     PaymentIntentId = request.PaymentIntent.Id,
                 }, cancellationToken);
@@ -42,8 +40,6 @@ namespace Application.Payment.Commands.PaymentIntentSucceeded
                         ProductId = Guid.Parse(productId),
                         UserId = Guid.Parse(request.PaymentIntent.Metadata["UserId"]),
                         OrderId = orderId,
-                        CreatedOn = DateTime.UtcNow,
-                        ModifiedOn = DateTime.UtcNow,
                     }, cancellationToken);
             }
 

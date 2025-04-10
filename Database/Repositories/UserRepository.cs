@@ -1,5 +1,4 @@
-﻿using Database.Commands;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Application.Common.Interfaces.Repositories;
 
 namespace Database.Repositories
