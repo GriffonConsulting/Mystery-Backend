@@ -3,7 +3,6 @@ using Application.Authentication.Commands.ForgotPassword;
 using Application.Authentication.Commands.ResetPassword;
 using Application.Authentication.Commands.SignUp;
 using Application.Authentication.Queries.SignIn;
-using Application.Common.Exceptions;
 using Application.Common.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +15,12 @@ namespace MurderParty.Api.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticateController(IMediator mediator)
+        public AuthenticateController(IMediator mediator, IConfiguration configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         [HttpPost("SignUp", Name = "SignUp")]
@@ -32,7 +33,16 @@ namespace MurderParty.Api.Controllers
             var signUpResult = await _mediator.Send(signUpCommand, cancellationToken);
             var signInResult = await _mediator.Send(new SignInQuery { Email = signUpCommand.Email, Password = signUpCommand.Password }, cancellationToken);
 
-            return Ok(signInResult);
+            Response.Cookies.Append("access_token", signInResult.Result.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = bool.Parse(_configuration["Cookies:Secure"]),  
+                SameSite = SameSiteMode.Strict,
+                Expires = signInResult.Result.ExpirationDate,
+                Path = "/"
+            });
+
+            return Ok();
         }
 
 
@@ -51,7 +61,17 @@ namespace MurderParty.Api.Controllers
         public async Task<IActionResult> SignIn(SignInQuery signInCommand, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(signInCommand, cancellationToken);
-            return Ok(result);
+
+            Response.Cookies.Append("access_token", result.Result.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = bool.Parse(_configuration["Cookies:Secure"]),    
+                SameSite = SameSiteMode.Strict,
+                Expires = result.Result.ExpirationDate,
+                Path = "/"
+            });
+
+            return Ok();
         }
 
         [HttpPost("ForgotPassword", Name = "ForgotPassword")]
@@ -69,6 +89,21 @@ namespace MurderParty.Api.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand resetPasswordCommand, CancellationToken cancellationToken)
         {
             await _mediator.Send(resetPasswordCommand, cancellationToken);
+            return Ok();
+        }
+
+        [HttpGet("Me", Name = "Me")]
+        [Authorize] 
+        public IActionResult Me()
+        {
+            return Ok();
+        }
+
+        [HttpPost("Logout", Name = "Logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("access_token");
+
             return Ok();
         }
     }

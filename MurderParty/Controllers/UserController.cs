@@ -5,7 +5,7 @@ using Application.User.Queries.GetUserGames;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MurderParty.Helpers;
+using MurderParty.Api.Helpers;
 
 namespace MurderParty.Api.Controllers
 {

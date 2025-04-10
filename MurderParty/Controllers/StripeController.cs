@@ -5,7 +5,7 @@ using Application.Payment.Commands.PaymentIntentSucceeded;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MurderParty.Helpers;
+using MurderParty.Api.Helpers;
 using Stripe;
 
 namespace MurderParty.Api.Controllers
