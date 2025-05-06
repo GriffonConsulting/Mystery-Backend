@@ -2,6 +2,7 @@
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Application.Product.Queries.GetProduct;
+using Application.UserProduct.GetProduct;
 using MediatR;
 
 namespace Application.Product.Queries.GetProducts

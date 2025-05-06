@@ -99,7 +99,7 @@ namespace MurderParty.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("Logout", Name = "Logout")]
+        [HttpPost("Signout", Name = "Signout")]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("access_token");

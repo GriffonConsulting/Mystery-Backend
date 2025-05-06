@@ -1,6 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces.Repositories;
 using Application.Product.Queries.GetProduct;
+using Application.UserProduct.GetProduct;
 using Domain.Entities;
 using Moq;
 

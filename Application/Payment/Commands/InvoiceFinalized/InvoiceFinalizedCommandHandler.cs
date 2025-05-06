@@ -17,12 +17,12 @@ namespace Application.Payment.Commands.InvoiceFinalized
 
         public async Task<RequestResult> Handle(InvoiceFinalizedCommand request, CancellationToken cancellationToken)
         {
-            var order = await _orderRepository.GetByPaymentIntentIdAsync(request.Invoice.PaymentIntentId, cancellationToken);
+            //var order = await _orderRepository.GetByPaymentIntentIdAsync(request.Invoice.PaymentIntentId, cancellationToken);
 
-            if (order == null) throw new NotFoundException("orderNotFound");
+            //if (order == null) throw new NotFoundException("orderNotFound");
 
-            order.ReceiptUrl = request.Invoice.InvoicePdf;
-            await _orderRepository.UpdateEntityAsync(order, cancellationToken);
+            //order.ReceiptUrl = request.Invoice.InvoicePdf;
+            //await _orderRepository.UpdateEntityAsync(order, cancellationToken);
 
             return new RequestResult
             {
