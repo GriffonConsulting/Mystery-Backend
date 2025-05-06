@@ -11,7 +11,7 @@ Ce projet est un site e-commerce dédié à la vente d'enquêtes. Le site permet
 Catalogue de murder parties avec fiches détaillées<br />
 Panier d’achat et paiement sécurisé<br />
 Gestion des utilisateurs (inscription, connexion)<br />
-Design responsive et immersif adapté à l’univers du jeu d’enquête<br />
+Design responsive<br />
 
 🛠️ Technologies utilisées
 
