@@ -4,7 +4,7 @@ using Stripe;
 
 namespace Application.Payment.Commands.InvoiceFinalized
 {
-    public class InvoiceFinalizedCommand : IRequest<RequestResult>
+    public class InvoicePaymentSucceededCommand : IRequest<RequestResult>
     {
         public required Invoice Invoice { get; set; }
     }

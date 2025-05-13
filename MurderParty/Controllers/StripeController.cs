@@ -36,7 +36,7 @@ namespace MurderParty.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("Webhook", Name = "Webhook")]
         [AllowAnonymous]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
@@ -58,12 +58,12 @@ namespace MurderParty.Api.Controllers
 
                     return Ok();
                 }
-                if (stripeEvent.Type == EventTypes.InvoiceFinalized)
+                if (stripeEvent.Type == EventTypes.InvoicePaymentSucceeded)
                 {
                     var invoice = stripeEvent.Data.Object as Invoice;
 
                     var result = await _mediator.Send(
-                        new InvoiceFinalizedCommand
+                        new InvoicePaymentSucceededCommand
                         {
                             Invoice = invoice!
                         }, cancellationToken);
