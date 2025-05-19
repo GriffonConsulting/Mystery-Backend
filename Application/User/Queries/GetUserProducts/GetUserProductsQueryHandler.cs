@@ -25,7 +25,7 @@ public class GetUserProductsQueryHandler : IRequestHandler<GetUserProductsQuery,
             {
                 Products = orderContents.Select(orderContent => new GetProductDto
                 {
-                    Id = orderContent.Id,
+                    Id = orderContent.UserProductId,
                     ProductCode = orderContent.Product.ProductCode,
                     Title = orderContent.Product.Title,
                     Subtitle = orderContent.Product.Subtitle,

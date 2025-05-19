@@ -29,6 +29,5 @@ namespace Application.Product.Queries.GetProduct
         public Difficulty Difficulty { get; init; }
         [Required]
         public ProductType ProductType { get; init; }
-
     }
 }

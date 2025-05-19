@@ -38,22 +38,22 @@ namespace Application.Payment.Commands.PaymentIntentSucceeded
             {
                 var product = await productRepository.GetById(Guid.Parse(productId));
 
-                var orderContentId = await orderContentRepository.AddAsync(
-                    new OrderContent
-                    {
-                        ProductId = Guid.Parse(productId),
-                        UserId = Guid.Parse(request.PaymentIntent.Metadata["UserId"]),
-                        OrderId = orderId,
-                    }, cancellationToken);
-
-                await userProductRepository.AddAsync(
+                var userProductId = await userProductRepository.AddAsync(
                     new UserProduct
                     {
                         ProductId = Guid.Parse(productId),
                         UserId = Guid.Parse(request.PaymentIntent.Metadata["UserId"]),
-                        OrderContentId = orderContentId,
                         ProductUserConfiguration = "{}",
                         ProductType = product.ProductType,
+                    }, cancellationToken);
+
+                await orderContentRepository.AddAsync(
+                    new OrderContent
+                    {
+                        ProductId = Guid.Parse(productId),
+                        UserProductId = userProductId,
+                        UserId = Guid.Parse(request.PaymentIntent.Metadata["UserId"]),
+                        OrderId = orderId,
                     }, cancellationToken);
             }
 
