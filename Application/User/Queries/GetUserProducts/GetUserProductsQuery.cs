@@ -2,9 +2,10 @@
 using MediatR;
 using System.Text.Json.Serialization;
 
-namespace Application.User.Queries.GetUserGames
+namespace Application.User.Queries.GetUserProducts
+
 {
-    public class GetUserGamesQuery : IRequest<RequestResult<GetUserGamesDto>>
+    public class GetUserProductsQuery : IRequest<RequestResult<GetUserProductsDto>>
     {
         [JsonIgnore]
         public required Guid ClientId { get; set; }

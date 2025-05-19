@@ -1,27 +1,27 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces.Repositories;
+﻿using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using Application.Product.Queries.GetProduct;
+using Application.User.Queries.GetUserProduct;
 using MediatR;
 
-namespace Application.User.Queries.GetUserGames;
+namespace Application.User.Queries.GetUserProducts;
 
-public class GetUserGamesQueryHandler : IRequestHandler<GetUserGamesQuery, RequestResult<GetUserGamesDto>>
+public class GetUserProductsQueryHandler : IRequestHandler<GetUserProductsQuery, RequestResult<GetUserProductsDto>>
 {
     private IOrderContentRepository _orderContentRepository { get; }
 
-    public GetUserGamesQueryHandler(IOrderContentRepository orderContentRepository)
+    public GetUserProductsQueryHandler(IOrderContentRepository orderContentRepository)
     {
         _orderContentRepository = orderContentRepository;
     }
 
-    public async Task<RequestResult<GetUserGamesDto>> Handle(GetUserGamesQuery request, CancellationToken cancellationToken)
+    public async Task<RequestResult<GetUserProductsDto>> Handle(GetUserProductsQuery request, CancellationToken cancellationToken)
     {
         var orderContents = await _orderContentRepository.GetByUserIdAsync(request.ClientId, cancellationToken);
 
-        return new RequestResult<GetUserGamesDto>
+        return new RequestResult<GetUserProductsDto>
         {
-            Result = new GetUserGamesDto
+            Result = new GetUserProductsDto
             {
                 Products = orderContents.Select(orderContent => new GetProductDto
                 {

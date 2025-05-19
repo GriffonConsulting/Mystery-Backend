@@ -1,7 +1,8 @@
 ﻿using Application.Common.Requests;
 using Application.User.Commands.UpdateUser;
 using Application.User.Queries.GetUser;
-using Application.User.Queries.GetUserGames;
+using Application.User.Queries.GetUserProduct;
+using Application.User.Queries.GetUserProducts;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,12 +41,21 @@ namespace MurderParty.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("games", Name = "GetUserGames")]
-        [ProducesResponseType(typeof(RequestResult<GetUserGamesDto>), StatusCodes.Status200OK)]
+        [HttpGet("products", Name = "GetUserProducts")]
+        [ProducesResponseType(typeof(RequestResult<GetUserProductsDto>), StatusCodes.Status200OK)]
         [Authorize]
-        public async Task<IActionResult> GetUserGames(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserProducts(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetUserGamesQuery { ClientId = Request.UserId() }, cancellationToken);
+            var result = await _mediator.Send(new GetUserProductsQuery { ClientId = Request.UserId() }, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet("product/{userProductId}/", Name = "GetUserProduct")]
+        [ProducesResponseType(typeof(RequestResult<GetUserProductDto>), StatusCodes.Status200OK)]
+        [Authorize]
+        public async Task<IActionResult> GetUserProduct([FromRoute]Guid userProductId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetUserProductQuery { UserProductId = userProductId }, cancellationToken);
             return Ok(result);
         }
     }

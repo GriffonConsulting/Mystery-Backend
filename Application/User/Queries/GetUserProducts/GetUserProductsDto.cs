@@ -1,8 +1,8 @@
 ﻿using Application.Product.Queries.GetProduct;
 
-namespace Application.User.Queries.GetUserGames
+namespace Application.User.Queries.GetUserProducts
 {
-    public record GetUserGamesDto
+    public record GetUserProductsDto
     {
         public required GetProductDto[] Products { get; init; }
 

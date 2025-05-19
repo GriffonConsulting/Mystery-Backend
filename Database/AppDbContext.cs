@@ -16,7 +16,7 @@ namespace Database
         public DbSet<Product> Product { get; set; }
         public DbSet<PromoCode> PromoCode { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<UserMurderProduct> UserMurderProduct { get; set; }
+        public DbSet<UserProduct> UserProduct { get; set; }
         public DbSet<Faq> Faq { get; set; }
     }
 }
