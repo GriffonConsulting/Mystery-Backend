@@ -25,6 +25,7 @@ public class GetUserProductsQueryHandler : IRequestHandler<GetUserProductsQuery,
             {
                 Products = orderContents.Select(orderContent => new GetProductDto
                 {
+                    //todo parameter UserProductId shouldn't be on Id 
                     Id = orderContent.UserProductId,
                     ProductCode = orderContent.Product.ProductCode,
                     Title = orderContent.Product.Title,
