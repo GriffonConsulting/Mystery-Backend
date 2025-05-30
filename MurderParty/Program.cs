@@ -120,7 +120,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options => options.WithOrigins(config["Urls:FrontEndUrl"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+app.UseCors(options => options.WithOrigins(config["Urls:FrontEndUrl"] ?? "").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
