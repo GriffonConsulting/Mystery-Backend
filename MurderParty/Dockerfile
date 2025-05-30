@@ -20,6 +20,7 @@ COPY ["Email/Email.csproj", "Email/"]
 COPY ["Paiement/Payment.csproj", "Paiement/"]
 RUN dotnet restore "./MurderParty/MurderParty.Api.csproj"
 COPY . .
+COPY appsettings.json .
 WORKDIR "/src/MurderParty"
 RUN dotnet build "./MurderParty.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
