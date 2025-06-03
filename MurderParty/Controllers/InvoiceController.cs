@@ -1,4 +1,5 @@
 ﻿using Application.Common.Requests;
+using Application.Invoices.Queries.GetInvoice;
 using Application.Invoices.Queries.GetInvoices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,5 +28,13 @@ namespace MurderParty.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("ByOrderId/{orderId}", Name = "GetInvoicesByOrderId")]
+        [ProducesResponseType(typeof(RequestResult<GetInvoiceDto>), StatusCodes.Status200OK)]
+        [Authorize]
+        public async Task<IActionResult> GetInvoiceByOrderId([FromRoute]Guid orderId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetInvoiceQuery { OrderId = orderId }, cancellationToken);
+            return Ok(result);
+        }
     }
 }

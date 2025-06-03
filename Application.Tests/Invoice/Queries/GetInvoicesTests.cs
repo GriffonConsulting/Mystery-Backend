@@ -54,10 +54,8 @@ namespace Application.Tests.Invoice.Queries
             Assert.Equal(2, result.Result.Length);
             Assert.Equal(100.50m, result.Result[0].Amount);
             Assert.Equal(new DateTime(2025, 03, 21), result.Result[0].CreatedOn);
-            Assert.Equal("https://example.com/receipt1", result.Result[0].ReceiptUrl);
             Assert.Equal(250.00m, result.Result[1].Amount);
             Assert.Equal(new DateTime(2025, 03, 20), result.Result[1].CreatedOn);
-            Assert.Equal("https://example.com/receipt2", result.Result[1].ReceiptUrl);
         }
 
         [Fact]

@@ -30,6 +30,7 @@ namespace Storage
                 .WithEndpoint(endpoint)
             .WithCredentials(accessKey, secretKey)
             .WithRegion(authenticationRegion)
+            .WithSSL()
             .Build();
         }
 
@@ -53,8 +54,7 @@ namespace Storage
         {
             var minio = CreateMinioClient();
             var args = new PresignedGetObjectArgs().WithBucket(bucketName).WithObject(obj).WithExpiry(600);
-            string url = await minio.PresignedGetObjectAsync(args);
-            return url;
+            return await minio.PresignedGetObjectAsync(args);
         }
     }
 }

@@ -6,23 +6,23 @@ namespace Application.Invoices.Queries.GetInvoices
 {
     public class GetInvoicesQueryHandler : IRequestHandler<GetInvoicesQuery, RequestResult<GetInvoicesDto[]>>
     {
-        private IOrderRepository _orderRepository { get; }
+        private readonly IOrderRepository orderRepository;
 
         public GetInvoicesQueryHandler(IOrderRepository orderRepository)
         {
-            _orderRepository = orderRepository;
+            this.orderRepository = orderRepository;
         }
 
 
         public async Task<RequestResult<GetInvoicesDto[]>> Handle(GetInvoicesQuery request, CancellationToken cancellationToken)
         {
-            var invoices = await _orderRepository.GetByUserIdAsync(request.UserId, cancellationToken);
+            var invoices = await orderRepository.GetByUserIdAsync(request.UserId, cancellationToken);
 
             return new RequestResult<GetInvoicesDto[]>
             {
                 Result = invoices.Select((i) => new GetInvoicesDto
                 {
-                    OrderId = i.Id,
+                    Id = i.Id,
                     Amount = i.Amount,
                     CreatedOn = i.CreatedOn,
                 }).OrderByDescending(i => i.CreatedOn).ToArray()
