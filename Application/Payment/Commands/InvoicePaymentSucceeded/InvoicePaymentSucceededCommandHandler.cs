@@ -1,4 +1,5 @@
 ﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Requests;
 using MediatR;
@@ -8,11 +9,13 @@ namespace Application.Payment.Commands.InvoiceFinalized
 {
     public class InvoicePaymentSucceededCommandHandler : IRequestHandler<InvoicePaymentSucceededCommand, RequestResult>
     {
-        private IOrderRepository _orderRepository { get; }
+        private readonly IOrderRepository orderRepository;
+        private readonly IFileStorage fileStorage;
 
-        public InvoicePaymentSucceededCommandHandler(IOrderRepository orderRepository)
+        public InvoicePaymentSucceededCommandHandler(IOrderRepository orderRepository, IFileStorage fileStorage)
         {
-            _orderRepository = orderRepository;
+            this.orderRepository = orderRepository;
+            this.fileStorage = fileStorage;
         }
 
 
@@ -20,14 +23,15 @@ namespace Application.Payment.Commands.InvoiceFinalized
         {
             var invoicePaymentService = new InvoicePaymentService();
             StripeList<InvoicePayment> invoicePayments = await invoicePaymentService.ListAsync(new InvoicePaymentListOptions { Invoice = request.Invoice.Id });
-            var order = await _orderRepository.GetByPaymentIntentIdAsync(invoicePayments.FirstOrDefault().Payment.PaymentIntentId, cancellationToken);
+            var order = await orderRepository.GetByPaymentIntentIdAsync(invoicePayments.FirstOrDefault().Payment.PaymentIntentId, cancellationToken);
 
             if (order == null) throw new NotFoundException("orderNotFound");
+            string invoiceUrl = $"invoices/{order.Id}.pdf";
+            await fileStorage.UploadFileFromUrlAsync(request.Invoice.InvoicePdf, invoiceUrl);
+            order.ReceiptUrl = invoiceUrl;
+            await orderRepository.UpdateEntityAsync(order, cancellationToken);
 
-            order.ReceiptUrl = request.Invoice.InvoicePdf;
-            await _orderRepository.UpdateEntityAsync(order, cancellationToken);
-
-            return new RequestResult    
+            return new RequestResult
             {
             };
         }

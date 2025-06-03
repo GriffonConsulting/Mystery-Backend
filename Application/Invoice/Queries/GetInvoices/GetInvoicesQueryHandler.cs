@@ -22,10 +22,9 @@ namespace Application.Invoices.Queries.GetInvoices
             {
                 Result = invoices.Select((i) => new GetInvoicesDto
                 {
-                    Id = i.Id,
+                    OrderId = i.Id,
                     Amount = i.Amount,
                     CreatedOn = i.CreatedOn,
-                    ReceiptUrl = i.ReceiptUrl,
                 }).OrderByDescending(i => i.CreatedOn).ToArray()
             };
         }

@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using MurderParty.Swagger.OperationFilters;
 using MurderParty.Swagger.SchemaFilters;
 using Payment;
+using Storage;
 using Stripe;
 using System.Text;
 
@@ -37,6 +38,7 @@ builder.Services.AddCors();
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IAuthentication, Authentication>();
 builder.Services.AddScoped<IPayment, Payment.Payment>();
+builder.Services.AddScoped<IFileStorage, FileStorage>();
 
 IConfigurationRoot config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
