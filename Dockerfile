@@ -33,5 +33,4 @@ RUN dotnet publish "./MurderParty.Api.csproj" -c $BUILD_CONFIGURATION -o /app/pu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY app/appsettings.json ./appsettings.json
 ENTRYPOINT ["dotnet", "MurderParty.Api.dll"]
