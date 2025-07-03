@@ -38,7 +38,8 @@ builder.Services.AddCors();
 builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddScoped<IAuthentication, Authentication>();
 builder.Services.AddScoped<IPayment, Payment.Payment>();
-builder.Services.AddScoped<IFileStorage, FileStorage>();
+builder.Services.AddScoped<IFileStorage, FileStorage>(); 
+builder.Services.AddHttpClient<FileStorage>();
 
 IConfigurationRoot config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -130,6 +131,8 @@ app.UseAuthorization();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
+
+//todo delete this postgresql mapping to datetime
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.Run();

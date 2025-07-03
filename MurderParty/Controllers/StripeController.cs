@@ -28,8 +28,8 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> Checkout(CheckoutCommand checkoutProductCommand, CancellationToken cancellationToken)
         {
-            checkoutProductCommand.Email = Request.Email();
-            checkoutProductCommand.UserId = Request.UserId();
+            checkoutProductCommand.Email = HttpContext.User.GetEmail();
+            checkoutProductCommand.UserId = HttpContext.User.GetUserId();
             var result = await _mediator.Send(checkoutProductCommand,
                 cancellationToken);
 

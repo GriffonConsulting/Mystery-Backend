@@ -12,8 +12,10 @@ namespace Storage
         private readonly string secretKey;
         private readonly string bucketName;
         private readonly string authenticationRegion;
+        private readonly HttpClient httpClient;
+        private readonly IMinioClient minioClient;
 
-        public FileStorage(IConfiguration configuration)
+        public FileStorage(IConfiguration configuration, HttpClient httpClient)
         {
             endpoint = configuration["FileStorage:Endpoint"] ?? throw new Exception("configuration[\"FileStorage:Endpoint\"] not found");
             accessKey = configuration["FileStorage:AccessKey"] ?? throw new Exception("configuration[\"FileStorage:AccessKey\"] not found");
@@ -21,13 +23,8 @@ namespace Storage
             bucketName = configuration["FileStorage:BucketName"] ?? throw new Exception("configuration[\"FileStorage:BucketName\"] not found"); ;
             authenticationRegion = configuration["FileStorage:AuthenticationRegion"] ?? throw new Exception("configuration[\"FileStorage:AuthenticationRegion\"] not found");
 
-        }
-
-        private IMinioClient CreateMinioClient()
-        {
-
-           return new MinioClient()
-                .WithEndpoint(endpoint)
+            this.httpClient = httpClient;
+            this.minioClient = new MinioClient().WithEndpoint(endpoint)
             .WithCredentials(accessKey, secretKey)
             .WithRegion(authenticationRegion)
             .WithSSL()
@@ -36,7 +33,6 @@ namespace Storage
 
         public async Task UploadFileFromUrlAsync(string fileUrl, string obj)
         {
-            using var httpClient = new HttpClient();
             using var response = await httpClient.GetAsync(fileUrl);
 
             if (!response.IsSuccessStatusCode)
@@ -45,16 +41,14 @@ namespace Storage
             await using var memoryStream = new MemoryStream();
             await response.Content.CopyToAsync(memoryStream);
             memoryStream.Position = 0;
-            var minio = CreateMinioClient();
             var args = new PutObjectArgs().WithBucket(bucketName).WithObject(obj).WithStreamData(memoryStream).WithObjectSize(memoryStream.Length);
-            await minio.PutObjectAsync(args);
+            await minioClient.PutObjectAsync(args);
         }
 
         public async Task<string> GetFileAsync(string obj)
         {
-            var minio = CreateMinioClient();
             var args = new PresignedGetObjectArgs().WithBucket(bucketName).WithObject(obj).WithExpiry(600);
-            return await minio.PresignedGetObjectAsync(args);
+            return await minioClient.PresignedGetObjectAsync(args);
         }
     }
 }

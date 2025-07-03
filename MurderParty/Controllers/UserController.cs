@@ -26,7 +26,7 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetUser(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetUserQuery { ClientId = Request.UserId(), Email = Request.Email() }, cancellationToken);
+            var result = await _mediator.Send(new GetUserQuery { ClientId = HttpContext.User.GetUserId(), Email = HttpContext.User.GetEmail() }, cancellationToken);
             return Ok(result);
         }
 
@@ -35,8 +35,8 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand updateUserQuery, CancellationToken cancellationToken)
         {
-            updateUserQuery.OldEmail = Request.Email(); //todo use HttpContext.User
-            updateUserQuery.UserId = Request.UserId();
+            updateUserQuery.OldEmail = HttpContext.User.GetEmail();
+            updateUserQuery.UserId = HttpContext.User.GetUserId();
             var result = await _mediator.Send(updateUserQuery, cancellationToken);
             return Ok(result);
         }
@@ -46,7 +46,7 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserProducts(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetUserProductsQuery { ClientId = Request.UserId() }, cancellationToken);
+            var result = await _mediator.Send(new GetUserProductsQuery { ClientId = HttpContext.User.GetUserId() }, cancellationToken);
             return Ok(result);
         }
 

@@ -24,7 +24,7 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetInvoicesByUserId(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetInvoicesQuery { UserId = Request.UserId() }, cancellationToken);
+            var result = await _mediator.Send(new GetInvoicesQuery { UserId = HttpContext.User.GetUserId() }, cancellationToken);
             return Ok(result);
         }
 
