@@ -15,14 +15,6 @@ public interface IRepository<TEntity> : IDisposable where TEntity : IAuditableEn
 
     public Task<Guid> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-
-
-    public IQueryable<TEntity> GetFilteredWithInclude(
-        Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-        string? sortPropertyName = null,
-        int? sortOrder = null);
-
     public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
     public Task<TEntity[]> GetAllAsync(CancellationToken cancellationToken = default);
@@ -40,7 +32,4 @@ public interface IRepository<TEntity> : IDisposable where TEntity : IAuditableEn
     public IQueryable<TEntity> AllAsQueryable();
 
     public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
-
-    public Task<TResult[]> GetFilteredPropertiesAsync<TResult>(Expression<Func<TEntity, TResult>> selector, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
-
 }

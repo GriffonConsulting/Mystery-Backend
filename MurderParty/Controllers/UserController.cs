@@ -35,7 +35,7 @@ namespace MurderParty.Api.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand updateUserQuery, CancellationToken cancellationToken)
         {
-            updateUserQuery.OldEmail = Request.Email();
+            updateUserQuery.OldEmail = Request.Email(); //todo use HttpContext.User
             updateUserQuery.UserId = Request.UserId();
             var result = await _mediator.Send(updateUserQuery, cancellationToken);
             return Ok(result);

@@ -24,18 +24,5 @@ namespace EntityFramework
 
             return services;
         }
-
-        public static void Register(this Assembly assembly,
-                                    IServiceCollection services,
-                                    Type baseType)
-        {
-            var types = assembly.ExportedTypes
-               .Where(x => x.IsClass && x.IsPublic && !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition().IsAssignableFrom(baseType));
-
-            foreach (var type in types)
-            {
-                services.AddScoped(type);
-            }
-        }
     }
 }

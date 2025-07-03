@@ -1,6 +1,4 @@
-﻿using Database.Extensions;
-using Domain.Common;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -19,7 +17,7 @@ namespace Database.Repositories
         {
             entity.ModifiedOn = DateTime.Now;
             _dbContext.Update(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task UpdateRangeEntitiesAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
@@ -29,7 +27,7 @@ namespace Database.Repositories
                 entity.ModifiedOn = DateTime.Now;
             }
             _dbContext.UpdateRange(entities);
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task InsertEntitiesAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
@@ -38,18 +36,18 @@ namespace Database.Repositories
             {
                 entity.CreatedOn = DateTime.Now;
                 entity.ModifiedOn = DateTime.Now;
-                await _dbContext.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+                _dbContext.Add(entity);
             }
 
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<Guid> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             entity.CreatedOn = DateTime.Now;
             entity.ModifiedOn = DateTime.Now;
-            await _dbContext.AddAsync(entity, cancellationToken).ConfigureAwait(false);
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            _dbContext.Add(entity);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return entity.Id;
         }
@@ -60,31 +58,6 @@ namespace Database.Repositories
 
             currentEntity.Id = dbEntity.Id;
             return Task.CompletedTask;
-        }
-
-
-
-        public IQueryable<TEntity> GetFilteredWithInclude(
-            Expression<Func<TEntity, bool>> predicate,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-            string? sortPropertyName = null,
-            int? sortOrder = null)
-        {
-            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
-
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            query = query.Where(predicate);
-
-            if (!string.IsNullOrWhiteSpace(sortPropertyName) && HashProperty(sortPropertyName))
-            {
-                query = query.OrderByDynamic(sortPropertyName, sortOrder);
-            }
-
-            return query;
         }
 
         public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
@@ -123,15 +96,6 @@ namespace Database.Repositories
         {
             return _dbContext.Set<TEntity>().CountAsync(predicate);
         }
-
-        public async Task<TResult[]> GetFilteredPropertiesAsync<TResult>(Expression<Func<TEntity, TResult>> selector, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            return await _dbContext.Set<TEntity>().Where(predicate).Select(selector).ToArrayAsync(cancellationToken);
-        }
-
-        private static bool HashProperty(string sortPropertyName) =>
-            PropertyHelper.GetPropertyName(PropertyHelper.GetProperty<TEntity>(sortPropertyName)) != null;
-
 
 
         #region IDisposable Support

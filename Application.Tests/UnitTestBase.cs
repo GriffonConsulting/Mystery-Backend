@@ -21,12 +21,12 @@ namespace Application.Tests
 
         public static async Task<string> GetTextFromFixture(string fixtureName)
         {
-            return await File.ReadAllTextAsync($@"{Directory.GetCurrentDirectory()}\DataFixtures\{fixtureName}").ConfigureAwait(false);
+            return await File.ReadAllTextAsync($@"{Directory.GetCurrentDirectory()}\DataFixtures\{fixtureName}");
         }
 
         public static async Task<(bool isSuccess, T result)> GetFromFixture<T>(string fixtureName)
         {
-            var text = await GetTextFromFixture(fixtureName).ConfigureAwait(false);
+            var text = await GetTextFromFixture(fixtureName);
 
             var result = JsonConvert.DeserializeObject<T>(text);
 
